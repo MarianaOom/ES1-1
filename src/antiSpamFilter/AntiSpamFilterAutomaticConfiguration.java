@@ -44,7 +44,7 @@ public class AntiSpamFilterAutomaticConfiguration {
             .setIndicatorList(Arrays.asList(new PISAHypervolume<DoubleSolution>()))
             .setIndependentRuns(INDEPENDENT_RUNS)
             .setNumberOfCores(8)
-            .build();
+            .build();    
 
     new ExecuteAlgorithms<>(experiment).run();
     new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
@@ -65,7 +65,7 @@ public class AntiSpamFilterAutomaticConfiguration {
               new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
               .setMaxEvaluations(25000)
               .setPopulationSize(100)
-              .build();
+              .build();  
       algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAII", problemList.get(i).getTag()));
     }
    

@@ -25,6 +25,7 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 	      upperLimit.add(5.0);
 	    }
 
+	    
 	    setLowerLimit(lowerLimit);
 	    setUpperLimit(upperLimit);
 	  }

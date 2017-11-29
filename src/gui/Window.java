@@ -134,6 +134,89 @@ public class Window extends JFrame{
 			gbc_btnSpam.gridx = 3;
 			gbc_btnSpam.gridy = 3;
 			contentPane.add(btnSpam, gbc_btnSpam);
+			
+			lblGeradorManual = new JLabel("Gerador Manual");
+			GridBagConstraints gbc_lblGeradorManual = new GridBagConstraints();
+			gbc_lblGeradorManual.insets = new Insets(0, 0, 5, 5);
+			gbc_lblGeradorManual.gridx = 1;
+			gbc_lblGeradorManual.gridy = 5;
+			contentPane.add(lblGeradorManual, gbc_lblGeradorManual);
+			
+			comboBox = new JComboBox();
+			GridBagConstraints gbc_comboBox = new GridBagConstraints();
+			gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+			gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_comboBox.gridx = 1;
+			gbc_comboBox.gridy = 6;
+			contentPane.add(comboBox, gbc_comboBox);
+			
+			textField_3 = new JTextField();
+			GridBagConstraints gbc_textField_3 = new GridBagConstraints();
+			gbc_textField_3.insets = new Insets(0, 0, 5, 5);
+			gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textField_3.gridx = 2;
+			gbc_textField_3.gridy = 6;
+			contentPane.add(textField_3, gbc_textField_3);
+			textField_3.setColumns(10);
+			
+			btnNewButton = new JButton("Evaluate");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+			gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
+			gbc_btnNewButton.gridx = 3;
+			gbc_btnNewButton.gridy = 6;
+			contentPane.add(btnNewButton, gbc_btnNewButton);
+			
+			lblFn = new JLabel("FN");
+			GridBagConstraints gbc_lblFn = new GridBagConstraints();
+			gbc_lblFn.insets = new Insets(0, 0, 5, 5);
+			gbc_lblFn.anchor = GridBagConstraints.EAST;
+			gbc_lblFn.gridx = 1;
+			gbc_lblFn.gridy = 7;
+			contentPane.add(lblFn, gbc_lblFn);
+			
+			textField_4 = new JTextField();
+			GridBagConstraints gbc_textField_4 = new GridBagConstraints();
+			gbc_textField_4.insets = new Insets(0, 0, 5, 5);
+			gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textField_4.gridx = 2;
+			gbc_textField_4.gridy = 7;
+			contentPane.add(textField_4, gbc_textField_4);
+			textField_4.setColumns(10);
+			
+			btnNewButton_1 = new JButton("Save");
+			btnNewButton_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+			gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
+			gbc_btnNewButton_1.gridx = 3;
+			gbc_btnNewButton_1.gridy = 7;
+			contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+			
+			lblFp = new JLabel("FP");
+			GridBagConstraints gbc_lblFp = new GridBagConstraints();
+			gbc_lblFp.insets = new Insets(0, 0, 5, 5);
+			gbc_lblFp.anchor = GridBagConstraints.EAST;
+			gbc_lblFp.gridx = 1;
+			gbc_lblFp.gridy = 8;
+			contentPane.add(lblFp, gbc_lblFp);
+			
+			textField_5 = new JTextField();
+			GridBagConstraints gbc_textField_5 = new GridBagConstraints();
+			gbc_textField_5.insets = new Insets(0, 0, 5, 5);
+			gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textField_5.gridx = 2;
+			gbc_textField_5.gridy = 8;
+			contentPane.add(textField_5, gbc_textField_5);
+			textField_5.setColumns(10);
+			
+			
+			
 			this.setVisible(true);
 		}
 		

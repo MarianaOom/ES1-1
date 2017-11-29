@@ -215,6 +215,76 @@ public class Window extends JFrame{
 			contentPane.add(textField_5, gbc_textField_5);
 			textField_5.setColumns(10);
 			
+			lblGeradorAutomtico = new JLabel("Gerador Autom\u00E1tico");
+			GridBagConstraints gbc_lblGeradorAutomtico = new GridBagConstraints();
+			gbc_lblGeradorAutomtico.insets = new Insets(0, 0, 5, 5);
+			gbc_lblGeradorAutomtico.gridx = 1;
+			gbc_lblGeradorAutomtico.gridy = 10;
+			contentPane.add(lblGeradorAutomtico, gbc_lblGeradorAutomtico);
+			
+			comboBox_1 = new JComboBox();
+			GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
+			gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
+			gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
+			gbc_comboBox_1.gridx = 1;
+			gbc_comboBox_1.gridy = 11;
+			contentPane.add(comboBox_1, gbc_comboBox_1);
+			
+			btnNewButton_3 = new JButton("Genarate");
+			btnNewButton_3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+				}
+			});
+			GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
+			gbc_btnNewButton_3.insets = new Insets(0, 0, 5, 0);
+			gbc_btnNewButton_3.gridx = 3;
+			gbc_btnNewButton_3.gridy = 11;
+			contentPane.add(btnNewButton_3, gbc_btnNewButton_3);
+			
+			label = new JLabel("FN");
+			GridBagConstraints gbc_label = new GridBagConstraints();
+			gbc_label.anchor = GridBagConstraints.EAST;
+			gbc_label.insets = new Insets(0, 0, 5, 5);
+			gbc_label.gridx = 1;
+			gbc_label.gridy = 12;
+			contentPane.add(label, gbc_label);
+			
+			textField_6 = new JTextField();
+			textField_6.setColumns(10);
+			GridBagConstraints gbc_textField_6 = new GridBagConstraints();
+			gbc_textField_6.insets = new Insets(0, 0, 5, 5);
+			gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textField_6.gridx = 2;
+			gbc_textField_6.gridy = 12;
+			contentPane.add(textField_6, gbc_textField_6);
+			
+			btnNewButton_2 = new JButton("Save");
+			btnNewButton_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
+			gbc_btnNewButton_2.insets = new Insets(0, 0, 5, 0);
+			gbc_btnNewButton_2.gridx = 3;
+			gbc_btnNewButton_2.gridy = 12;
+			contentPane.add(btnNewButton_2, gbc_btnNewButton_2);
+			
+			label_1 = new JLabel("FP");
+			GridBagConstraints gbc_label_1 = new GridBagConstraints();
+			gbc_label_1.anchor = GridBagConstraints.EAST;
+			gbc_label_1.insets = new Insets(0, 0, 0, 5);
+			gbc_label_1.gridx = 1;
+			gbc_label_1.gridy = 13;
+			contentPane.add(label_1, gbc_label_1);
+			
+			textField_7 = new JTextField();
+			textField_7.setColumns(10);
+			GridBagConstraints gbc_textField_7 = new GridBagConstraints();
+			gbc_textField_7.insets = new Insets(0, 0, 0, 5);
+			gbc_textField_7.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textField_7.gridx = 2;
+			gbc_textField_7.gridy = 13;
+			contentPane.add(textField_7, gbc_textField_7);
 			
 			
 			this.setVisible(true);

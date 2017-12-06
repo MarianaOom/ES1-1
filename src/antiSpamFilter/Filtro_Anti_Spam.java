@@ -1,6 +1,8 @@
 package antiSpamFilter;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -77,6 +79,7 @@ public class Filtro_Anti_Spam {
 		messages.add(m);
 	}
 	
+	
 	public void evalute(int type){
 		FP = 0;
 		FN = 0;
@@ -98,5 +101,55 @@ public class Filtro_Anti_Spam {
 			window.setAutomaticResults(FP,FN);
 	}
 	
+	public void printResults(){
+		File[] r = (new File("Rules")).listFiles();
+		String lastName = r[r.length -1].getName();
+		int number = Integer.parseInt(lastName.split("s")[1].split(".c")[0]);
+		number++;
+		try {
+			File f = new File("Rules/rules" +number +".cf");
+			FileWriter fi = new FileWriter("Rules/rules" +number +".cf");
+			BufferedWriter printer = new BufferedWriter(fi);
+			for(Rules rule : rules){
+				String line = rule.getName() +"\t" +rule.getWeight();
+				printer.write(line);
+				printer.newLine();
+			}
+			printer.write("FP:\t" +FP);
+			printer.newLine();
+			printer.write("FN:\t" +FN);
+			printer.close();
+			fi.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	
+	
+	public Window getWindow() {
+		return window;
+	}
+	
+	public ArrayList<Rules> getRules() {
+		return rules;
+	}
+	
+	public ArrayList<Message> getMessages() {
+		return messages;
+	}
+
+	public void setRules_path(String rules_path) {
+		this.rules_path = rules_path;
+	}
+
+	public void setHam_path(String ham_path) {
+		this.ham_path = ham_path;
+	}
+
+	public void setSpam_path(String spam_path) {
+		this.spam_path = spam_path;
+	}
+
 	
 }

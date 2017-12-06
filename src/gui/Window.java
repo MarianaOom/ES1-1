@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import antiSpamFilter.Rules;
+
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;
 import java.awt.GridBagConstraints;
@@ -15,7 +18,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
+
 
 public class Window extends JFrame{
 	
@@ -30,7 +35,7 @@ public class Window extends JFrame{
 		private JLabel lblRulesPath;
 		private JLabel lblHamPath;
 		private JLabel lblSpamPath;
-		private JComboBox comboBox;
+		private JComboBox dropDown;
 		private JTextField textField_3;
 		private JTextField textField_4;
 		private JTextField textField_5;
@@ -38,7 +43,7 @@ public class Window extends JFrame{
 		private JLabel lblFp;
 		private JButton btnNewButton;
 		private JButton btnNewButton_1;
-		private JComboBox comboBox_1;
+		private JComboBox dropDown2;
 		private JLabel label;
 		private JLabel label_1;
 		private JTextField textField_6;
@@ -50,7 +55,10 @@ public class Window extends JFrame{
 		private JFormattedTextField formattedTextField;
 
 
-		public Window(){
+		public Window(Filtro_Anti_Spam fil){
+			
+			filter = fil;
+			
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 785, 458);
 			contentPane = new JPanel();
@@ -80,9 +88,21 @@ public class Window extends JFrame{
 			contentPane.add(textField, gbc_textField);
 			textField.setColumns(10);
 			
+			Window w= this;
+			
 			JButton btnHam = new JButton("Rules");
 			btnHam.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					 JFileChooser fc = new JFileChooser();
+					 fc.showOpenDialog(w);
+					 textField.setText(fc.getSelectedFile().getName());
+					 fil.setRules_path(fc.getSelectedFile().getAbsolutePath());
+					 fc.setVisible(true);
+					 fil.prepareRules();
+					 for (Rules rule : filter.getRules()){
+						 dropDown.addItem(rule.getName());
+						 dropDown2.addItem(rule.getName());
+					 }
 				}
 			});
 			GridBagConstraints gbc_btnHam = new GridBagConstraints();
@@ -113,6 +133,17 @@ public class Window extends JFrame{
 			gbc_btnHam_1.gridx = 3;
 			gbc_btnHam_1.gridy = 2;  
 			contentPane.add(btnHam_1, gbc_btnHam_1);
+			btnHam_1.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e){
+					JFileChooser fc = new JFileChooser();
+					fc.showOpenDialog(w);
+					textField_1.setText(fc.getSelectedFile().getName());
+					fil.setHam_path(fc.getSelectedFile().getAbsolutePath());
+					fc.setVisible(true);
+				}
+			});
 			
 			lblSpamPath = new JLabel("Spam Path");
 			GridBagConstraints gbc_lblSpamPath = new GridBagConstraints();
@@ -136,6 +167,25 @@ public class Window extends JFrame{
 			gbc_btnSpam.gridx = 3;
 			gbc_btnSpam.gridy = 3;
 			contentPane.add(btnSpam, gbc_btnSpam);
+			btnSpam.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("Avancei depressa demais 1");
+					 JFileChooser fc = new JFileChooser();
+					 System.out.println("Avancei depressa demais 2");
+					 fc.showOpenDialog(w);
+					 System.out.println("Avancei depressa demais 3 ---> " +fc.getSelectedFile().getName());
+					 textField_2.setText(fc.getSelectedFile().getName());
+					 System.out.println("Avancei depressa demais 4 ---> " +fc.getSelectedFile().getName());
+					 fil.setSpam_path(fc.getSelectedFile().getAbsolutePath());
+					 System.out.println("Avancei depressa demais 5");
+					 fc.setVisible(true);
+					 System.out.println("Avancei depressa demais 6");
+					 fil.readMessages();
+					 System.out.println("Avancei depressa demais 7");
+				}
+			});
 			
 			lblGeradorManual = new JLabel("Gerador Manual");
 			GridBagConstraints gbc_lblGeradorManual = new GridBagConstraints();
@@ -144,13 +194,15 @@ public class Window extends JFrame{
 			gbc_lblGeradorManual.gridy = 5;
 			contentPane.add(lblGeradorManual, gbc_lblGeradorManual);
 			
-			comboBox = new JComboBox();
+			
+			
+			dropDown = new JComboBox();
 			GridBagConstraints gbc_comboBox = new GridBagConstraints();
 			gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 			gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 			gbc_comboBox.gridx = 1;
 			gbc_comboBox.gridy = 6;
-			contentPane.add(comboBox, gbc_comboBox);
+			contentPane.add(dropDown, gbc_comboBox);
 			
 			textField_3 = new JTextField();
 			GridBagConstraints gbc_textField_3 = new GridBagConstraints();
@@ -224,13 +276,13 @@ public class Window extends JFrame{
 			gbc_lblGeradorAutomtico.gridy = 10;
 			contentPane.add(lblGeradorAutomtico, gbc_lblGeradorAutomtico);
 			
-			comboBox_1 = new JComboBox();
+			dropDown2 = new JComboBox();
 			GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
 			gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
 			gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
 			gbc_comboBox_1.gridx = 1;
 			gbc_comboBox_1.gridy = 11;
-			contentPane.add(comboBox_1, gbc_comboBox_1);
+			contentPane.add(dropDown2, gbc_comboBox_1);
 			
 			btnNewButton_3 = new JButton("Genarate");
 			btnNewButton_3.addActionListener(new ActionListener() {
@@ -299,9 +351,5 @@ public class Window extends JFrame{
 			
 			this.setVisible(true);
 		}
-		
-		public static void main(String[] args) {
-			new Window();
-		}
-		
+	
 }

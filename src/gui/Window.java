@@ -111,7 +111,7 @@ public class Window extends JFrame{
 			GridBagConstraints gbc_btnHam_1 = new GridBagConstraints();
 			gbc_btnHam_1.insets = new Insets(0, 0, 5, 0);
 			gbc_btnHam_1.gridx = 3;
-			gbc_btnHam_1.gridy = 2;
+			gbc_btnHam_1.gridy = 2;  
 			contentPane.add(btnHam_1, gbc_btnHam_1);
 			
 			lblSpamPath = new JLabel("Spam Path");

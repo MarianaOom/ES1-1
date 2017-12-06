@@ -1,25 +1,23 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import antiSpamFilter.Rules;
-
-import java.awt.GridBagLayout;
-import javax.swing.JTextField;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import antiSpamFilter.Filtro_Anti_Spam;
+import antiSpamFilter.Rules;
 
 
 public class Window extends JFrame{
@@ -53,6 +51,7 @@ public class Window extends JFrame{
 		private JLabel lblGeradorManual;
 		private JLabel lblGeradorAutomtico;
 		private JFormattedTextField formattedTextField;
+		private Filtro_Anti_Spam filter;
 
 
 		public Window(Filtro_Anti_Spam fil){
@@ -350,6 +349,12 @@ public class Window extends JFrame{
 			
 			
 			this.setVisible(true);
+		}
+
+
+		public void setManualResults(int fP, int fN) {
+			lblFn.setText(""+fN);
+			lblFp.setText(""+fP);
 		}
 	
 }

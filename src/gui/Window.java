@@ -17,8 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 
 public class Window extends JFrame{
-	
-
 
 		private JPanel contentPane;
 		private JTextField textField;
@@ -191,7 +189,7 @@ public class Window extends JFrame{
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 				}
-			});
+			}); 
 			GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 			gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
 			gbc_btnNewButton_1.gridx = 3;

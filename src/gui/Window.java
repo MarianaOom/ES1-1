@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 
 public class Window extends JFrame{
 	
@@ -46,6 +47,7 @@ public class Window extends JFrame{
 		private JButton btnNewButton_3;
 		private JLabel lblGeradorManual;
 		private JLabel lblGeradorAutomtico;
+		private JFormattedTextField formattedTextField;
 
 
 		public Window(){
@@ -235,6 +237,14 @@ public class Window extends JFrame{
 				public void actionPerformed(ActionEvent arg0) {
 				}
 			});
+			
+			formattedTextField = new JFormattedTextField();
+			GridBagConstraints gbc_formattedTextField = new GridBagConstraints();
+			gbc_formattedTextField.insets = new Insets(0, 0, 5, 5);
+			gbc_formattedTextField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_formattedTextField.gridx = 2;
+			gbc_formattedTextField.gridy = 11;
+			contentPane.add(formattedTextField, gbc_formattedTextField);
 			GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
 			gbc_btnNewButton_3.insets = new Insets(0, 0, 5, 0);
 			gbc_btnNewButton_3.gridx = 3;

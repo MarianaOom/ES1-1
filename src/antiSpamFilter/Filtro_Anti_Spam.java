@@ -97,7 +97,7 @@ public class Filtro_Anti_Spam {
 		System.out.println("Falsos Negativos - " +FN);
 		if(type == 1 )
 			window.setManualResults(FP,FN);
-		else
+		else //Falta o neto fazer
 			window.setAutomaticResults(FP,FN);
 	}
 	

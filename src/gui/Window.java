@@ -110,9 +110,8 @@ public class Window extends JFrame {
 				JFileChooser fc = new JFileChooser();
 				fc.showOpenDialog(w);
 				textField.setText(fc.getSelectedFile().getName());
-				fil.setRules_path(fc.getSelectedFile().getAbsolutePath());
 				fc.setVisible(true);
-				fil.prepareRules();
+				fil.prepareRules(fc.getSelectedFile().getAbsolutePath()); 
 				for (Rules rule : filter.getRules()) {
 					dropDown.addItem(rule.getName());
 					dropDown2.addItem(rule.getName());
@@ -154,8 +153,8 @@ public class Window extends JFrame {
 				JFileChooser fc = new JFileChooser();
 				fc.showOpenDialog(w);
 				textField_1.setText(fc.getSelectedFile().getName());
-				fil.setHam_path(fc.getSelectedFile().getAbsolutePath());
 				fc.setVisible(true);
+				fil.readHam(fc.getSelectedFile().getAbsolutePath());
 
 			}
 		});
@@ -183,16 +182,15 @@ public class Window extends JFrame {
 		gbc_btnSpam.gridy = 3;
 		contentPane.add(btnSpam, gbc_btnSpam);
 		btnSpam.addActionListener(new ActionListener() {
-
+ 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
 				fc.showOpenDialog(w);
 				textField_2.setText(fc.getSelectedFile().getName());
-				fil.setSpam_path(fc.getSelectedFile().getAbsolutePath());
 				fc.setVisible(true);
-				fil.readMessages();
-
+				fil.readSpam(fc.getSelectedFile().getAbsolutePath());
+ 
 			}
 		});
 

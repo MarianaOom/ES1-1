@@ -13,9 +13,6 @@ import gui.Window;
 public class Anti_Spam_Filter {
 
 	private Window window;
-	private String rules_path;
-	private String ham_path;
-	private String spam_path;
 	private ArrayList<Rules> rules = new ArrayList<Rules>();
 	private int FP = 0;
 	private int FN = 0;
@@ -34,8 +31,8 @@ public class Anti_Spam_Filter {
 		return rules;
 	}
 
-	public void prepareRules() {
-		File fileRules = new File(rules_path);
+	public void prepareRules(String path) {
+		File fileRules = new File(path);
 		try {
 			Scanner scannerRules = new Scanner(fileRules);
 			System.out.println(" Rules - " + scannerRules.hasNextLine());
@@ -46,30 +43,27 @@ public class Anti_Spam_Filter {
 		}
 	}
 
-	public void readMessages() {
-		messages = new ArrayList<Message>();
-		File fileHam = new File(ham_path);
-		File fileSpam = new File(spam_path);
+	public void readHam(String path) {
+		File fileHam = new File(path);
 		try {
 			Scanner scannerHam = new Scanner(fileHam);
-			System.out.println(" Ham - " + scannerHam.hasNextLine());
-			Scanner scannerSpam = new Scanner(fileSpam);
-			while (scannerSpam.hasNextLine()) {
-				createMessage(scannerSpam.nextLine(), 0);
-			}
 			while (scannerHam.hasNextLine())
 				createMessage(scannerHam.nextLine(), 1);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		int spam = 0;
-		int ham = 0;
-		for (Message rule : messages) {
-			if (rule instanceof Ham)
-				ham++;
-			else
-				spam++;
+	}
+
+	public void readSpam(String path) {
+		File fileSpam = new File(path);
+		try {
+			Scanner scannerSpam = new Scanner(fileSpam);
+			while (scannerSpam.hasNextLine()) {
+				createMessage(scannerSpam.nextLine(), 0);
+			}
+		} catch (Exception e) {
 		}
+
 	}
 
 	public void createMessage(String s, int i) {
@@ -88,7 +82,6 @@ public class Anti_Spam_Filter {
 	}
 
 	public void evaluate() {
-
 		FN = 0;
 		double weight = 0.0;
 		for (Message message : messages) {
@@ -102,24 +95,8 @@ public class Anti_Spam_Filter {
 		}
 		System.out.println("Falsos Positiovos - " + FP);
 		System.out.println("Falsos Negativos  - " + FN);
-			window.setManualResults(FP, FN);
+		window.setManualResults(FP, FN);
 
-	}
-
-	public void automaticEvaluation1() {
-		try {
-			new AntiSpamFilterAutomaticConfiguration(this);
-			Scanner scann = new Scanner(
-					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs"));
-			String[] result = scann.nextLine().split(" ");
-			for (int i = 0; i < result.length; i++)
-				rules.get(i).setWeight(Double.parseDouble(result[i]));
-			for (Rules ru : rules)
-				System.out.println(ru.getWeight());
-			window.setAutomaticResults(Integer.parseInt(result[result.length-2].split(": ")[1]), Integer.parseInt(result[result.length-1].split(": ")[1]));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void automaticEvaluation() {
@@ -132,8 +109,9 @@ public class Anti_Spam_Filter {
 				rules.get(i).setWeight(Double.parseDouble(result[i]));
 			for (Rules ru : rules)
 				System.out.println(ru.getWeight());
-			window.setAutomaticResults(Integer.parseInt(result[result.length-2].split(": ")[1]), Integer.parseInt(result[result.length-1].split(": ")[1]));
-		} catch (IOException e) {
+			window.setAutomaticResults(Integer.parseInt(result[result.length - 2].split(": ")[1]),
+					Integer.parseInt(result[result.length - 1].split(": ")[1]));
+		} catch (IOException e) { 
 			e.printStackTrace();
 		}
 	}
@@ -141,19 +119,15 @@ public class Anti_Spam_Filter {
 	public void printResults(int type) {
 		File[] r = (new File("Rules")).listFiles();
 		String lastName = r[r.length - 1].getName();
-		System.out.println(lastName.split("s")[1].split(".c")[0]);
 		int number = Integer.parseInt(lastName.split("s")[1].split(".c")[0]);
-		System.out.println(number);
 		number++;
 		try {
 			File f;
-			if(type==0)
-			 f = new File("Rules/rules" + number + ".cf");
+			if (type == 0)
+				f = new File("Rules/rules" + number + ".cf");
 			else
-				 f = new File("Rules/Automatic_rules" + number + ".cf");
+				f = new File("Rules/Automatic_rules" + number + ".cf");
 			FileWriter fi = new FileWriter("Rules/rules" + number + ".cf");
-			System.out.println(" nolme - " + f.getName());
-			System.out.println(f.canWrite());
 			BufferedWriter printer = new BufferedWriter(fi);
 			for (Rules rule : rules) {
 				String line = rule.getName() + "\t" + rule.getWeight();
@@ -163,11 +137,9 @@ public class Anti_Spam_Filter {
 			printer.write("FP:\t" + FP);
 			printer.newLine();
 			printer.write("FN:\t" + FN);
-			printer.close(); 
+			printer.close();
 			fi.close();
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -177,7 +149,7 @@ public class Anti_Spam_Filter {
 		FP = 0;
 		FN = 0;
 		for (int i = 0; i < x.length; i++)
-			rules.get(i).setWeight(x[i]);
+			rules.get(i).setWeight(x[i]); 
 		double weight = 0.0;
 		for (Message message : messages) {
 			for (Rules rule : message.getRules())
@@ -194,15 +166,4 @@ public class Anti_Spam_Filter {
 		return result;
 	}
 
-	public void setRules_path(String rules_path) {
-		this.rules_path = rules_path;
-	}
-
-	public void setHam_path(String ham_path) {
-		this.ham_path = ham_path;
-	}
-
-	public void setSpam_path(String spam_path) {
-		this.spam_path = spam_path;
-	}
 }

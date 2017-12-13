@@ -2,6 +2,7 @@ package antiSpamFilter;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,15 +30,20 @@ public class Filtro_Anti_Spam {
 		window.setVisible(true);
 	}
 
+	public ArrayList<Rules> getRules() {
+		return rules;
+	}
+
 	public void prepareRules() {
 		File fileRules = new File(rules_path);
+		System.out.println(fileRules.isFile());
 		try {
 			Scanner scannerRules = new Scanner(fileRules);
+			System.out.println(" Rules - " + scannerRules.hasNextLine());
 			while (scannerRules.hasNextLine())
 				rules.add(new Rules(scannerRules.nextLine()));
 		} catch (Exception e) {
-			// TODO: handle exception
-
+			System.out.println("Failed to locate file!");
 		}
 	}
 
@@ -47,9 +53,11 @@ public class Filtro_Anti_Spam {
 		File fileSpam = new File(spam_path);
 		try {
 			Scanner scannerHam = new Scanner(fileHam);
+			System.out.println(" Ham - " + scannerHam.hasNextLine());
 			Scanner scannerSpam = new Scanner(fileSpam);
-			while (scannerSpam.hasNextLine())
+			while (scannerSpam.hasNextLine()) {
 				createMessage(scannerSpam.nextLine(), 0);
+			}
 			while (scannerHam.hasNextLine())
 				createMessage(scannerHam.nextLine(), 1);
 		} catch (Exception e) {
@@ -72,39 +80,65 @@ public class Filtro_Anti_Spam {
 			m = new Ham(line[0]);
 		else
 			m = new Spam(line[0]);
-		for (int j = 0; j < line.length; j++)
-			for (Rules rule : rules)
-				if (rule.getName().contains(line[j].trim()))
+		for (int k = 1; k < line.length; k++)
+			for (Rules rule : rules) {
+				if (rule.getName().contains(line[k].trim()))
 					m.addRules(rule);
+			}
 		messages.add(m);
 	}
 
-	public void evalute() {
+	public void evaluate(int type) {
 		FP = 0;
 		FN = 0;
-		double weigh = 0.0; 
+		double weight = 0.0;
 		for (Message message : messages) {
 			for (Rules rule : message.getRules())
-				weigh += rule.getWeight();
-			if (weigh > 5 && message instanceof Ham)
+				weight += rule.getWeight();
+			if (weight > 5 && message instanceof Ham)
 				FN++;
-			if (weigh < 5 && message instanceof Spam)
+			if (weight < 5 && message instanceof Spam)
 				FP++;
-			weigh = 0.0;
+			weight = 0.0;
 		}
-		System.out.println("Falsos Positivos - " + FP);
-		System.out.println("Falsos Negativos - " + FN);
+		System.out.println("Falsos Positiovos - " + FP);
+		System.out.println("Falsos Negativos  - " + FN);
+		if (type == 1)
 			window.setManualResults(FP, FN);
+		else
+			window.setAutomaticResults(FP, FN);
+
+	}
+
+	public void automaticEvaluation() {
+		try {
+			new AntiSpamFilterAutomaticConfiguration(this);
+			Scanner scann = new Scanner(
+					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs"));
+			String[] result = scann.nextLine().split(" ");
+			for (int i = 0; i < result.length; i++)
+				rules.get(i).setWeight(Double.parseDouble(result[i]));
+			for (Rules ru : rules)
+				System.out.println(ru.getWeight());
+			evaluate(0);
+		} catch (IOException e) {
+			System.out.println("Ehhhhhhhhhhhhhhhhhhhhhh");
+			e.printStackTrace();
+		}
 	}
 
 	public void printResults() {
 		File[] r = (new File("Rules")).listFiles();
 		String lastName = r[r.length - 1].getName();
+		System.out.println(lastName.split("s")[1].split(".c")[0]);
 		int number = Integer.parseInt(lastName.split("s")[1].split(".c")[0]);
+		System.out.println(number);
 		number++;
 		try {
 			File f = new File("Rules/rules" + number + ".cf");
 			FileWriter fi = new FileWriter("Rules/rules" + number + ".cf");
+			System.out.println(" nolme - " + f.getName());
+			System.out.println(f.canWrite());
 			BufferedWriter printer = new BufferedWriter(fi);
 			for (Rules rule : rules) {
 				String line = rule.getName() + "\t" + rule.getWeight();
@@ -114,50 +148,25 @@ public class Filtro_Anti_Spam {
 			printer.write("FP:\t" + FP);
 			printer.newLine();
 			printer.write("FN:\t" + FN);
-			printer.close();
+			printer.close(); 
 			fi.close();
-		} catch (Exception e) {
-			// TODO: handle exception
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public Window getWindow() {
-		return window;
-	}
-
-	public ArrayList<Rules> getRules() {
-		return rules;
-	}
-
-	public ArrayList<Message> getMessages() {
-		return messages;
-	}
-
-	public void setRules_path(String rules_path) {
-		this.rules_path = rules_path;
-	}
-
-	// public void automaticEvalu
-
-	public void setHam_path(String ham_path) {
-		this.ham_path = ham_path;
-	}
-
-	public void setSpam_path(String spam_path) {
-		this.spam_path = spam_path;
-	}
-
-	public int[] evaluteAutomatic(double[] x) {
+	public int[] evaluateAutomatic(double[] x) {
 		FP = 0;
 		FN = 0;
-		for (int i = 0; i < x.length; i++) {
+		for (int i = 0; i < x.length; i++)
 			rules.get(i).setWeight(x[i]);
-		}
 		double weight = 0.0;
 		for (Message message : messages) {
-			for (Rules rule : message.getRules()) {
+			for (Rules rule : message.getRules())
 				weight += rule.getWeight();
-			}
 			if (weight > 5 && message instanceof Ham)
 				FN++;
 			if (weight < 5 && message instanceof Spam)
@@ -170,22 +179,15 @@ public class Filtro_Anti_Spam {
 		return result;
 	}
 
-	public void automaticEvaluation() {
-		try {
-			new AntiSpamFilterAutomaticConfiguration(this);
-			Scanner scanner = new Scanner(
-					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs"));
-			String[] result = scanner.nextLine().split(" ");
-			for (int i = 0; i < result.length; i++)
-				rules.get(i).setWeight(Double.parseDouble(result[i]));
-			window.setAutomaticResults(Integer.parseInt(result[result.length - 2].split(": ")[1]),
-					Integer.parseInt(result[result.length - 1].split(": ")[1]));
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// evalute(0);
+	public void setRules_path(String rules_path) {
+		this.rules_path = rules_path;
 	}
 
+	public void setHam_path(String ham_path) {
+		this.ham_path = ham_path;
+	}
+
+	public void setSpam_path(String spam_path) {
+		this.spam_path = spam_path;
+	}
 }

@@ -78,7 +78,6 @@ public class Filtro_Anti_Spam {
 					m.addRules(rule);
 		messages.add(m);
 	}
-
 	public void evalute() {
 		FP = 0;
 		FN = 0;

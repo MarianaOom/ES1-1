@@ -90,7 +90,6 @@ public class Filtro_Anti_Spam {
 
 	public void evaluate() {
 
-		FP = 0;
 		FN = 0;
 		double weight = 0.0;
 		for (Message message : messages) {
@@ -105,6 +104,24 @@ public class Filtro_Anti_Spam {
 		System.out.println("Falsos Positiovos - " + FP);
 		System.out.println("Falsos Negativos  - " + FN);
 			window.setManualResults(FP, FN);
+
+	}
+
+	public void automaticEvaluation1() {
+		try {
+			new AntiSpamFilterAutomaticConfiguration(this);
+			Scanner scann = new Scanner(
+					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs"));
+			String[] result = scann.nextLine().split(" ");
+			for (int i = 0; i < result.length; i++)
+				rules.get(i).setWeight(Double.parseDouble(result[i]));
+			for (Rules ru : rules)
+				System.out.println(ru.getWeight());
+			window.setAutomaticResults(Integer.parseInt(result[result.length-2].split(": ")[1]), Integer.parseInt(result[result.length-1].split(": ")[1]));
+		} catch (IOException e) {
+			System.out.println("Ehhhhhhhhhhhhhhhhhhhhhh");
+			e.printStackTrace();
+		}
 	}
 
 	public void automaticEvaluation() {

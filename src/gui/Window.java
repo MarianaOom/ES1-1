@@ -103,20 +103,20 @@ public class Window extends JFrame {
 		gbc_textField.gridy = 1;
 		contentPane.add(textField, gbc_textField);
 		textField.setColumns(10);
-		Window w =this;
+		Window w = this;
 		JButton btnHam = new JButton("Rules");
 		btnHam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				 JFileChooser fc = new JFileChooser();
-				 fc.showOpenDialog(w);
-				 textField.setText(fc.getSelectedFile().getName());
-				 fil.setRules_path(fc.getSelectedFile().getAbsolutePath());
-				 fc.setVisible(true);
-				 fil.prepareRules();
-				 for (Rules rule : filter.getRules()){
-						dropDown.addItem(rule.getName());
-						dropDown2.addItem(rule.getName());
-				 }
+				JFileChooser fc = new JFileChooser();
+				fc.showOpenDialog(w);
+				textField.setText(fc.getSelectedFile().getName());
+				fil.setRules_path(fc.getSelectedFile().getAbsolutePath());
+				fc.setVisible(true);
+				fil.prepareRules();
+				for (Rules rule : filter.getRules()) {
+					dropDown.addItem(rule.getName());
+					dropDown2.addItem(rule.getName());
+				}
 			}
 		});
 		GridBagConstraints gbc_btnHam = new GridBagConstraints();
@@ -148,16 +148,15 @@ public class Window extends JFrame {
 		gbc_btnHam_1.gridy = 2;
 		contentPane.add(btnHam_1, gbc_btnHam_1);
 		btnHam_1.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 JFileChooser fc = new JFileChooser();
-				 fc.showOpenDialog(w);
-				 textField_1.setText(fc.getSelectedFile().getName());
-				 fil.setHam_path(fc.getSelectedFile().getAbsolutePath());
-				 fc.setVisible(true);
-				 
-				
+				JFileChooser fc = new JFileChooser();
+				fc.showOpenDialog(w);
+				textField_1.setText(fc.getSelectedFile().getName());
+				fil.setHam_path(fc.getSelectedFile().getAbsolutePath());
+				fc.setVisible(true);
+
 			}
 		});
 
@@ -184,23 +183,23 @@ public class Window extends JFrame {
 		gbc_btnSpam.gridy = 3;
 		contentPane.add(btnSpam, gbc_btnSpam);
 		btnSpam.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Avancei depressa demais 1");
-				 JFileChooser fc = new JFileChooser();
-				 System.out.println("Avancei depressa demais 2");
-				 fc.showOpenDialog(w);
-				 System.out.println("Avancei depressa demais 3 ---> " +fc.getSelectedFile().getName());
-				 textField_2.setText(fc.getSelectedFile().getName());
-				 System.out.println("Avancei depressa demais 4 ---> " +fc.getSelectedFile().getName());
-				 fil.setSpam_path(fc.getSelectedFile().getAbsolutePath());
-				 System.out.println("Avancei depressa demais 5");
-				 fc.setVisible(true);
-				 System.out.println("Avancei depressa demais 6");
-				 fil.readMessages();
-				 System.out.println("Avancei depressa demais 7");
-				
+				JFileChooser fc = new JFileChooser();
+				System.out.println("Avancei depressa demais 2");
+				fc.showOpenDialog(w);
+				System.out.println("Avancei depressa demais 3 ---> " + fc.getSelectedFile().getName());
+				textField_2.setText(fc.getSelectedFile().getName());
+				System.out.println("Avancei depressa demais 4 ---> " + fc.getSelectedFile().getName());
+				fil.setSpam_path(fc.getSelectedFile().getAbsolutePath());
+				System.out.println("Avancei depressa demais 5");
+				fc.setVisible(true);
+				System.out.println("Avancei depressa demais 6");
+				fil.readMessages();
+				System.out.println("Avancei depressa demais 7");
+
 			}
 		});
 
@@ -212,14 +211,13 @@ public class Window extends JFrame {
 		contentPane.add(lblGeradorManual, gbc_lblGeradorManual);
 
 		dropDown = new JComboBox<>();
-		
+
 		dropDown.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int index = dropDown.getSelectedIndex();
-				textField_3.setText(""+filter.getRules().get(dropDown.getSelectedIndex()).getWeight());
-				
+				textField_3.setText("" + filter.getRules().get(dropDown.getSelectedIndex()).getWeight());
 
 			}
 		});
@@ -244,9 +242,11 @@ public class Window extends JFrame {
 			public void keyTyped(KeyEvent e) {
 				e.consume();
 			}
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 			}
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				keyHandler(e);
@@ -256,6 +256,7 @@ public class Window extends JFrame {
 		btnNewButton = new JButton("Evaluate");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				filter.evaluate();
 			}
 		});
@@ -285,8 +286,8 @@ public class Window extends JFrame {
 		btnNewButton_1 = new JButton("Save");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for(Rules r: filter.getRules())
-					if(r.getWeight()!=0.0)
+				for (Rules r : filter.getRules())
+					if (r.getWeight() != 0.0)
 						System.out.println(r.getWeight());
 			}
 		});
@@ -328,8 +329,7 @@ public class Window extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int index = dropDown2.getSelectedIndex();
-				textField_3.setText(""+filter.getRules().get(dropDown2.getSelectedIndex()).getWeight());
-				
+				textField_3.setText("" + filter.getRules().get(dropDown2.getSelectedIndex()).getWeight());
 
 			}
 		});
@@ -375,6 +375,121 @@ public class Window extends JFrame {
 				fil.printResults(0);
 			}
 		});
+		gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNewButton.gridx = 3;
+		gbc_btnNewButton.gridy = 6;
+		contentPane.add(btnNewButton, gbc_btnNewButton);
+
+		lblFn = new JLabel("FN:");
+		gbc_lblFn = new GridBagConstraints();
+		gbc_lblFn.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFn.anchor = GridBagConstraints.EAST;
+		gbc_lblFn.gridx = 1;
+		gbc_lblFn.gridy = 7;
+		contentPane.add(lblFn, gbc_lblFn);
+
+		manual_FN = new JTextField();
+		gbc_textField_4 = new GridBagConstraints();
+		gbc_textField_4.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_4.gridx = 2;
+		gbc_textField_4.gridy = 7;
+		contentPane.add(manual_FN, gbc_textField_4);
+		manual_FN.setColumns(10);
+
+		btnNewButton_1 = new JButton("Save");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (Rules r : filter.getRules())
+					if (r.getWeight() != 0.0)
+						System.out.println(r.getWeight());
+			}
+		});
+		gbc_btnNewButton_1 = new GridBagConstraints();
+		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNewButton_1.gridx = 3;
+		gbc_btnNewButton_1.gridy = 7;
+		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+
+		lblFp = new JLabel("FP:");
+		gbc_lblFp = new GridBagConstraints();
+		gbc_lblFp.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFp.anchor = GridBagConstraints.EAST;
+		gbc_lblFp.gridx = 1;
+		gbc_lblFp.gridy = 8;
+		contentPane.add(lblFp, gbc_lblFp);
+
+		manual_FP = new JTextField();
+		gbc_textField_5 = new GridBagConstraints();
+		gbc_textField_5.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_5.gridx = 2;
+		gbc_textField_5.gridy = 8;
+		contentPane.add(manual_FP, gbc_textField_5);
+		manual_FP.setColumns(10);
+
+		lblGeradorAutomtico = new JLabel("Gerador Autom\u00E1tico");
+		gbc_lblGeradorAutomtico = new GridBagConstraints();
+		gbc_lblGeradorAutomtico.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGeradorAutomtico.gridx = 1;
+		gbc_lblGeradorAutomtico.gridy = 10;
+		contentPane.add(lblGeradorAutomtico, gbc_lblGeradorAutomtico);
+
+		dropDown2 = new JComboBox();
+		for (Rules rule : filter.getRules())
+			dropDown2.addItem(rule.getName());
+		dropDown2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int index = dropDown2.getSelectedIndex();
+				textField_3.setText("" + filter.getRules().get(dropDown2.getSelectedIndex()).getWeight());
+
+			}
+		});
+		gbc_comboBox_1 = new GridBagConstraints();
+		gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox_1.gridx = 1;
+		gbc_comboBox_1.gridy = 11;
+		contentPane.add(dropDown2, gbc_comboBox_1);
+
+		btnNewButton_3 = new JButton("Genarate");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				fil.automaticEvaluation();
+			}
+		});
+		gbc_btnNewButton_3 = new GridBagConstraints();
+		gbc_btnNewButton_3.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNewButton_3.gridx = 3;
+		gbc_btnNewButton_3.gridy = 11;
+		contentPane.add(btnNewButton_3, gbc_btnNewButton_3);
+
+		label = new JLabel("FN:");
+		gbc_label = new GridBagConstraints();
+		gbc_label.anchor = GridBagConstraints.EAST;
+		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.gridx = 1;
+		gbc_label.gridy = 12;
+		contentPane.add(label, gbc_label);
+
+		automatic_FN = new JTextField();
+		automatic_FN.setColumns(10);
+		gbc_textField_6 = new GridBagConstraints();
+		gbc_textField_6.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_6.gridx = 2;
+		gbc_textField_6.gridy = 12;
+		contentPane.add(automatic_FN, gbc_textField_6);
+
+		btnNewButton_2 = new JButton("Save");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fil.printResults(1);
+			}
+		});
 		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
 		gbc_btnNewButton_2.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_2.gridx = 3;
@@ -402,7 +517,8 @@ public class Window extends JFrame {
 	private void keyHandler(KeyEvent e) {
 		if (e.getKeyCode() != KeyEvent.VK_ENTER) {
 			if (Character.isDigit(e.getKeyChar()) || e.getKeyCode() == KeyEvent.VK_PERIOD
-					|| e.getKeyCode() == KeyEvent.VK_COLON || e.getKeyCode() == KeyEvent.VK_MINUS || e.getKeyCode()==KeyEvent.VK_SUBTRACT) {
+					|| e.getKeyCode() == KeyEvent.VK_COLON || e.getKeyCode() == KeyEvent.VK_MINUS
+					|| e.getKeyCode() == KeyEvent.VK_SUBTRACT) {
 				System.out.println(e.getKeyChar());
 				textField_3.setText(textField_3.getText() + e.getKeyChar());
 			} else
@@ -425,20 +541,21 @@ public class Window extends JFrame {
 			System.out.println(value);
 		}
 	}
-	
-	public void setManualResults(int p, int n){
-		FP=p;
-		FN=n;
-		manual_FN.setText(""+FN);
-		manual_FP.setText(""+FP);
+
+	public void setManualResults(int p, int n) {
+		FP = p;
+		FN = n;
+		manual_FN.setText("" + FN);
+		manual_FP.setText("" + FP);
 	}
-	public void setAutomaticResults(int p, int n){
+
+	public void setAutomaticResults(int p, int n) {
 		/*
 		 * TEMPORARIO APENAS ENQUANTO NÃO SE METE UM COMO DEVE DE SER!!!!!!!
-		 * */
-		FP=p;
-		FN=n;
-		manual_FN.setText(""+FN);
-		manual_FP.setText(""+FP);
+		 */
+		FP = p;
+		FN = n;
+		manual_FN.setText("" + FN);
+		manual_FP.setText("" + FP);
 	}
 }

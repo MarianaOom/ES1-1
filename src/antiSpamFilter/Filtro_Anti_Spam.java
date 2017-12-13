@@ -82,7 +82,7 @@ public class Filtro_Anti_Spam {
 	public void evalute() {
 		FP = 0;
 		FN = 0;
-		double weigh = 0.0;
+		double weigh = 0.0; 
 		for (Message message : messages) {
 			for (Rules rule : message.getRules())
 				weigh += rule.getWeight();

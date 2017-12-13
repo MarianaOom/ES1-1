@@ -268,7 +268,7 @@ public class Window extends JFrame{
 			contentPane.add(textField_5, gbc_textField_5);
 			textField_5.setColumns(10);
 			
-			lblGeradorAutomtico = new JLabel("Gerador Autom\u00E1tico");
+			lblGeradorAutomtico = new JLabel("Gerador Automático");
 			GridBagConstraints gbc_lblGeradorAutomtico = new GridBagConstraints();
 			gbc_lblGeradorAutomtico.insets = new Insets(0, 0, 5, 5);
 			gbc_lblGeradorAutomtico.gridx = 1;
@@ -286,6 +286,7 @@ public class Window extends JFrame{
 			btnNewButton_3 = new JButton("Genarate");
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					fil.automaticEvaluation();
 				}
 			});
 			
@@ -355,6 +356,12 @@ public class Window extends JFrame{
 		public void setManualResults(int fP, int fN) {
 			lblFn.setText(""+fN);
 			lblFp.setText(""+fP);
+		}
+
+
+		public void setAutomaticResults(int fP, int fN) {
+			label.setText(""+fN);
+			label_1.setText(""+fP);
 		}
 	
 }

@@ -3,6 +3,7 @@ package antiSpamFilter;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -62,7 +63,6 @@ public class Filtro_Anti_Spam {
 			else
 				spam++;
 		}
-
 	}
 
 	public void createMessage(String s, int i) {
@@ -72,69 +72,63 @@ public class Filtro_Anti_Spam {
 			m = new Ham(line[0]);
 		else
 			m = new Spam(line[0]);
-		for (int j = 0; j < line.length; j++) 
+		for (int j = 0; j < line.length; j++)
 			for (Rules rule : rules)
 				if (rule.getName().contains(line[j].trim()))
 					m.addRules(rule);
 		messages.add(m);
 	}
-	
-	
-	public void evalute(int type){
+
+	public void evalute() {
 		FP = 0;
 		FN = 0;
-		double weigh =0.0;
-		for(Message message : messages){
-			for(Rules rule : message.getRules())
-				weigh+= rule.getWeight();
-			if(weigh > 5 && message instanceof Ham)
+		double weigh = 0.0;
+		for (Message message : messages) {
+			for (Rules rule : message.getRules())
+				weigh += rule.getWeight();
+			if (weigh > 5 && message instanceof Ham)
 				FN++;
-			if(weigh < 5 && message instanceof Spam)
+			if (weigh < 5 && message instanceof Spam)
 				FP++;
-			weigh=0.0;
+			weigh = 0.0;
 		}
-		System.out.println("Falsos Positivos - " +FP);
-		System.out.println("Falsos Negativos - " +FN);
-		if(type == 1 )
-			window.setManualResults(FP,FN);
-		else //Falta o neto fazer
-			window.setAutomaticResults(FP,FN);
+		System.out.println("Falsos Positivos - " + FP);
+		System.out.println("Falsos Negativos - " + FN);
+			window.setManualResults(FP, FN);
 	}
-	
-	public void printResults(){
+
+	public void printResults() {
 		File[] r = (new File("Rules")).listFiles();
-		String lastName = r[r.length -1].getName();
+		String lastName = r[r.length - 1].getName();
 		int number = Integer.parseInt(lastName.split("s")[1].split(".c")[0]);
 		number++;
 		try {
-			File f = new File("Rules/rules" +number +".cf");
-			FileWriter fi = new FileWriter("Rules/rules" +number +".cf");
+			File f = new File("Rules/rules" + number + ".cf");
+			FileWriter fi = new FileWriter("Rules/rules" + number + ".cf");
 			BufferedWriter printer = new BufferedWriter(fi);
-			for(Rules rule : rules){
-				String line = rule.getName() +"\t" +rule.getWeight();
+			for (Rules rule : rules) {
+				String line = rule.getName() + "\t" + rule.getWeight();
 				printer.write(line);
 				printer.newLine();
 			}
-			printer.write("FP:\t" +FP);
+			printer.write("FP:\t" + FP);
 			printer.newLine();
-			printer.write("FN:\t" +FN);
+			printer.write("FN:\t" + FN);
 			printer.close();
 			fi.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
-	
-	
-	
+
 	public Window getWindow() {
 		return window;
 	}
-	
+
 	public ArrayList<Rules> getRules() {
 		return rules;
 	}
-	
+
 	public ArrayList<Message> getMessages() {
 		return messages;
 	}
@@ -142,6 +136,8 @@ public class Filtro_Anti_Spam {
 	public void setRules_path(String rules_path) {
 		this.rules_path = rules_path;
 	}
+
+	// public void automaticEvalu
 
 	public void setHam_path(String ham_path) {
 		this.ham_path = ham_path;
@@ -151,5 +147,45 @@ public class Filtro_Anti_Spam {
 		this.spam_path = spam_path;
 	}
 
-	
+	public int[] evaluteAutomatic(double[] x) {
+		FP = 0;
+		FN = 0;
+		for (int i = 0; i < x.length; i++) {
+			rules.get(i).setWeight(x[i]);
+		}
+		double weight = 0.0;
+		for (Message message : messages) {
+			for (Rules rule : message.getRules()) {
+				weight += rule.getWeight();
+			}
+			if (weight > 5 && message instanceof Ham)
+				FN++;
+			if (weight < 5 && message instanceof Spam)
+				FP++;
+			weight = 0.0;
+		}
+		int[] result = new int[2];
+		result[0] = FP;
+		result[1] = FN;
+		return result;
+	}
+
+	public void automaticEvaluation() {
+		try {
+			new AntiSpamFilterAutomaticConfiguration(this);
+			Scanner scanner = new Scanner(
+					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs"));
+			String[] result = scanner.nextLine().split(" ");
+			for (int i = 0; i < result.length; i++)
+				rules.get(i).setWeight(Double.parseDouble(result[i]));
+			window.setAutomaticResults(Integer.parseInt(result[result.length - 2].split(": ")[1]),
+					Integer.parseInt(result[result.length - 1].split(": ")[1]));
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// evalute(0);
+	}
+
 }

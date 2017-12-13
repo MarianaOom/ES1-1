@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import gui.Window;
 
-public class Filtro_Anti_Spam {
+public class Anti_Spam_Filter {
 
 	private Window window;
 	private String rules_path;
@@ -22,10 +22,10 @@ public class Filtro_Anti_Spam {
 	private ArrayList<Message> messages = new ArrayList<Message>();
 
 	public static void main(String[] args) {
-		new Filtro_Anti_Spam();
+		new Anti_Spam_Filter();
 	}
 
-	public Filtro_Anti_Spam() {
+	public Anti_Spam_Filter() {
 		window = new Window(this);
 		window.setVisible(true);
 	}
@@ -36,7 +36,6 @@ public class Filtro_Anti_Spam {
 
 	public void prepareRules() {
 		File fileRules = new File(rules_path);
-		System.out.println(fileRules.isFile());
 		try {
 			Scanner scannerRules = new Scanner(fileRules);
 			System.out.println(" Rules - " + scannerRules.hasNextLine());
@@ -119,7 +118,6 @@ public class Filtro_Anti_Spam {
 				System.out.println(ru.getWeight());
 			window.setAutomaticResults(Integer.parseInt(result[result.length-2].split(": ")[1]), Integer.parseInt(result[result.length-1].split(": ")[1]));
 		} catch (IOException e) {
-			System.out.println("Ehhhhhhhhhhhhhhhhhhhhhh");
 			e.printStackTrace();
 		}
 	}
@@ -136,7 +134,6 @@ public class Filtro_Anti_Spam {
 				System.out.println(ru.getWeight());
 			window.setAutomaticResults(Integer.parseInt(result[result.length-2].split(": ")[1]), Integer.parseInt(result[result.length-1].split(": ")[1]));
 		} catch (IOException e) {
-			System.out.println("Ehhhhhhhhhhhhhhhhhhhhhh");
 			e.printStackTrace();
 		}
 	}

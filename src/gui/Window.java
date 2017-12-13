@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import antiSpamFilter.Filtro_Anti_Spam;
+import antiSpamFilter.Anti_Spam_Filter;
 import antiSpamFilter.Rules;
 
 public class Window extends JFrame {
@@ -49,7 +49,7 @@ public class Window extends JFrame {
 	private JButton btnNewButton_3;
 	private JLabel lblGeradorManual;
 	private JLabel lblGeradorAutomtico;
-	private Filtro_Anti_Spam filter;
+	private Anti_Spam_Filter filter;
 	private int FN;
 	private int FP;
 
@@ -72,7 +72,7 @@ public class Window extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Window(Filtro_Anti_Spam fil) {
+	public Window(Anti_Spam_Filter fil) {
 		filter = fil;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 785, 458);
@@ -186,19 +186,12 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Avancei depressa demais 1");
 				JFileChooser fc = new JFileChooser();
-				System.out.println("Avancei depressa demais 2");
 				fc.showOpenDialog(w);
-				System.out.println("Avancei depressa demais 3 ---> " + fc.getSelectedFile().getName());
 				textField_2.setText(fc.getSelectedFile().getName());
-				System.out.println("Avancei depressa demais 4 ---> " + fc.getSelectedFile().getName());
 				fil.setSpam_path(fc.getSelectedFile().getAbsolutePath());
-				System.out.println("Avancei depressa demais 5");
 				fc.setVisible(true);
-				System.out.println("Avancei depressa demais 6");
 				fil.readMessages();
-				System.out.println("Avancei depressa demais 7");
 
 			}
 		});

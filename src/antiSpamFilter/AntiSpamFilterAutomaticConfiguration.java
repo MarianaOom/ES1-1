@@ -24,7 +24,7 @@ import java.util.List;
 public class AntiSpamFilterAutomaticConfiguration {
   private static final int INDEPENDENT_RUNS = 5 ;
 
-  public  AntiSpamFilterAutomaticConfiguration(Filtro_Anti_Spam filtro) throws IOException {
+  public  AntiSpamFilterAutomaticConfiguration(Anti_Spam_Filter filtro) throws IOException {
     String experimentBaseDirectory = "experimentBaseDirectory";
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();

@@ -1,9 +1,12 @@
-Identificação da turma (ex: EIC1)
+Turma EIC1
 
-Identificação do grupo (ex: Grupo 2)
+Grupo 26
 
-Identificação do número, nome e papel de cada membro do grupo (ex: 12345, José Silva, Scrum Master)
+73033, Mariana Oom, Scrum Master, marianasousaoom@gmail.com
+72907, Jo�o Neto, Developer, jmsgn@iscte-iul.pt
+69784 Adr� Neiva, Developer, agpna@iscte-iul.pt
+70062, Mariana Melo, Quality manager, maamo@iscte-iul.pt 
 
-Identificação da variante do projeto desenvolvida (ex: AntiSpamConfigurationForProfessionalMailbox)
+AntiSpamConfigurationForProfessionalAndLeisureMailbox
 
-Link para um vídeo no youtube com a demonstração da aplicação final desenvolvida (ex: http://...)
+TODO Link para um vídeo no youtube com a demonstração da aplicação final desenvolvida (ex: http://...)

@@ -11,18 +11,10 @@ import java.util.Scanner;
 import gui.Window;
 
 /**
- * @author Mariana Oom
+ * @author Group 26
  *
  */
 
-/**
- * @author Mariana Oom
- *
- */
-/**
- * @author Mariana Oom
- *
- */
 public class Anti_Spam_Filter {
 
 	private Window window;
@@ -36,6 +28,7 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
+	 * This method initiates the application window for the antiSpamFilter.
 	 * 
 	 */
 	public Anti_Spam_Filter() {
@@ -48,7 +41,9 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
-	 * @param path
+	 * This method locates the rules file and reads it.
+	 * warns user if it can't find the file.
+	 * @param name the path for the rules file.
 	 */
 	public void prepareRules(String path) {
 		File fileRules = new File(path);
@@ -58,12 +53,14 @@ public class Anti_Spam_Filter {
 			while (scannerRules.hasNextLine())
 				rules.add(new Rules(scannerRules.nextLine()));
 		} catch (Exception e) {
-			System.out.println("Failed to locate file!");
+			System.out.println("Failed to locate file rules!");
 		}
 	}
 	
 	/**
-	 * @param path
+	 * This method locates the HAM file and reads it.
+	 * warns user if it can't find the file.
+	 * @param name the path for the HAM file.
 	 */
 	public void readHam(String path) {
 		File fileHam = new File(path);
@@ -72,12 +69,15 @@ public class Anti_Spam_Filter {
 			while (scannerHam.hasNextLine())
 				createMessage(scannerHam.nextLine(), 1);
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("Failed to locate HAM file!");
+
 		}
 	}
 
 	/**
-	 * @param path
+	 * This method locates the SPAM file and reads it.
+	 * warns user if it can't find the file.
+	 * @param name the path for the SPAM file.
 	 */
 	public void readSpam(String path) {
 		File fileSpam = new File(path);
@@ -92,8 +92,10 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
-	 * @param s
-	 * @param i
+	 * This method reads one of the SPAM or HAM files.
+	 * In every line associates the message to it's set of rules and adds a message with it's set of rules, to the message list.
+	 * @param String type that splits the line in the file.  
+	 * @param Integer that defines if we are reading the HAM or SPAM file.
 	 */
 	public void createMessage(String s, int i) {
 		String[] line = s.split("\\t");
@@ -111,7 +113,15 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
-	 * 
+	 * This method evaluates the messages in the message list, for
+	 * the manual evaluation.
+	 * For each message, reads it's rules and calculates the weight 
+	 * of the message, if the message is from the SPAM file and the 
+	 * weight is less than five it adds one to the false positives,
+	 * if the message is from the HAM file and the weight is more 
+	 * than five it adds one to the false negatives. 
+	 * In the end prints the results of the false positives and false 
+	 * negatives in the application window.
 	 */
 	public void evaluate() {
 		FN = 0;
@@ -132,6 +142,9 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
+	 * This method initiates the AntiSpamFilterAutomaticConfiguration which set's the weights  of the rules
+	 * and saves them on the NSGAII file.
+	 * In the end gives the results of the false positives and false negatives to the application window.
 	 * 
 	 */
 	public void automaticEvaluation() {
@@ -152,7 +165,10 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
-	 * @param type
+	 * This method saves the results of the evaluations.
+	 * It is invoked in the class window when the button "save" is pressed 
+	 * @param Integer type that defines if the save was made in the automatic 
+	 * configuration or in the manual configuration.
 	 */
 	public void printResults(int type) {
 		File[] r = (new File("Rules")).listFiles();
@@ -184,8 +200,17 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
-	 * @param x
-	 * @return  
+	 * This method evaluates the messages in the message list for 
+	 * the automatic evaluation.
+	 * For each message, reads it's rules and calculates the weight 
+	 * of the message, if the message is from the SPAM file and the 
+	 * weight is less than five it adds one to the false positives,
+	 * if the message is from the HAM file and the weight is more 
+	 * than five it adds one to the false negatives. 
+	 * @param A double vector that set's all the weights of the rules
+	 * in the automatic evaluation. 
+	 * @return The results of the false positives an false negatives in
+	 * in a vector with both results.
 	 */
 	public int[] evaluateAutomatic(double[] x) {
 		FP = 0;

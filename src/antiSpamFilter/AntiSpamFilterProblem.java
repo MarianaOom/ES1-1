@@ -20,6 +20,7 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 	}
 
 	/**
+	 * This method was written by the professor.
 	 * @param numberOfVariables
 	 */
 	public AntiSpamFilterProblem(Integer numberOfVariables) {
@@ -43,6 +44,7 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
 	/* (non-Javadoc)
 	 * @see org.uma.jmetal.problem.Problem#evaluate(java.lang.Object)
+	 * This method runs the evaluateAutomatic function.
 	 */
 	public void evaluate(DoubleSolution solution) {
 		double[] x = new double[getNumberOfVariables()];

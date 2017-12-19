@@ -185,7 +185,7 @@ public class Anti_Spam_Filter {
 
 	/**
 	 * @param x
-	 * @return
+	 * @return  
 	 */
 	public int[] evaluateAutomatic(double[] x) {
 		FP = 0;

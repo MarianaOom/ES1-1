@@ -10,6 +10,19 @@ import java.util.Scanner;
 
 import gui.Window;
 
+/**
+ * @author Mariana Oom
+ *
+ */
+
+/**
+ * @author Mariana Oom
+ *
+ */
+/**
+ * @author Mariana Oom
+ *
+ */
 public class Anti_Spam_Filter {
 
 	private Window window;
@@ -22,6 +35,9 @@ public class Anti_Spam_Filter {
 		new Anti_Spam_Filter();
 	}
 
+	/**
+	 * 
+	 */
 	public Anti_Spam_Filter() {
 		window = new Window(this);
 		window.setVisible(true);
@@ -31,6 +47,9 @@ public class Anti_Spam_Filter {
 		return rules;
 	}
 
+	/**
+	 * @param path
+	 */
 	public void prepareRules(String path) {
 		File fileRules = new File(path);
 		try {
@@ -42,7 +61,10 @@ public class Anti_Spam_Filter {
 			System.out.println("Failed to locate file!");
 		}
 	}
-
+	
+	/**
+	 * @param path
+	 */
 	public void readHam(String path) {
 		File fileHam = new File(path);
 		try {
@@ -54,6 +76,9 @@ public class Anti_Spam_Filter {
 		}
 	}
 
+	/**
+	 * @param path
+	 */
 	public void readSpam(String path) {
 		File fileSpam = new File(path);
 		try {
@@ -66,6 +91,10 @@ public class Anti_Spam_Filter {
 
 	}
 
+	/**
+	 * @param s
+	 * @param i
+	 */
 	public void createMessage(String s, int i) {
 		String[] line = s.split("\\t");
 		Message m;
@@ -81,6 +110,9 @@ public class Anti_Spam_Filter {
 		messages.add(m);
 	}
 
+	/**
+	 * 
+	 */
 	public void evaluate() {
 		FN = 0;
 		double weight = 0.0;
@@ -99,6 +131,9 @@ public class Anti_Spam_Filter {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void automaticEvaluation() {
 		try {
 			new AntiSpamFilterAutomaticConfiguration(this);
@@ -116,6 +151,9 @@ public class Anti_Spam_Filter {
 		}
 	}
 
+	/**
+	 * @param type
+	 */
 	public void printResults(int type) {
 		File[] r = (new File("Rules")).listFiles();
 		String lastName = r[r.length - 1].getName();
@@ -145,6 +183,10 @@ public class Anti_Spam_Filter {
 		}
 	}
 
+	/**
+	 * @param x
+	 * @return
+	 */
 	public int[] evaluateAutomatic(double[] x) {
 		FP = 0;
 		FN = 0;

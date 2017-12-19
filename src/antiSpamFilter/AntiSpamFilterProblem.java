@@ -19,6 +19,9 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
 	}
 
+	/**
+	 * @param numberOfVariables
+	 */
 	public AntiSpamFilterProblem(Integer numberOfVariables) {
 		setNumberOfVariables(numberOfVariables);
 		setNumberOfObjectives(2);
@@ -38,6 +41,9 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		setUpperLimit(upperLimit);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.uma.jmetal.problem.Problem#evaluate(java.lang.Object)
+	 */
 	public void evaluate(DoubleSolution solution) {
 		double[] x = new double[getNumberOfVariables()];
 		for (int i = 0; i < solution.getNumberOfVariables(); i++) // {

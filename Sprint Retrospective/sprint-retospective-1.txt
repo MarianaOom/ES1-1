@@ -1,0 +1,21 @@
+Sprint Retrospective #1
+
+-O que correu bem?
+
+conseguimos completar o código
+boa distribuição de trabalho pelos elementos do grupo
+
+
+-O que correu mal?
+
+dificuldade em perceber o funcionamneto do git
+dificuldade em prever duração de cada sprint
+
+
+-Aspetos a manter:
+
+distribuição de trabalho
+
+-Aspetos a melhorar:
+gestão de tempo dispendido em cada sprint de forma a ir ao encontro do nosso planeamento.
+

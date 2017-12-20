@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ClassDiagram>
-    <Class name="antiSpamFilter.Message" x="722" y="529">
+    <Class name="antiSpamFilter.Message" x="686" y="485">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -67,7 +67,7 @@
         <Communication destinationClassName="antiSpamFilter.Rules"/>
         <Communication destinationClassName="antiSpamFilter.Anti_Spam_Filter"/>
     </Class>
-    <Class name="antiSpamFilter.Ham" x="619" y="612">
+    <Class name="antiSpamFilter.Ham" x="597" y="616">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>

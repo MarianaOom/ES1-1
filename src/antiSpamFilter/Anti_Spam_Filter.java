@@ -210,11 +210,11 @@ public class Anti_Spam_Filter {
 	 * than five it adds one to the false negatives. 
 	 * @param A double vector that set's all the weights of the rules
 	 * in the automatic evaluation. 
-	 * @return The results of the false positives an false negatives in
+	 * @return The results of the false positives and false negatives in
 	 * in a vector with both results.
 	 */
 	public int[] evaluateAutomatic(double[] x) {
-		FP = 0;
+		FP = 0; 
 		FN = 0;
 		for (int i = 0; i < rules.size(); i++)
 			rules.get(i).setWeight(x[i]); 

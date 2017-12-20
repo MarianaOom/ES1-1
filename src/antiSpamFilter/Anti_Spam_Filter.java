@@ -272,40 +272,22 @@ public class Anti_Spam_Filter {
 		} 
 	}
 	/**
-<<<<<<< HEAD
 	 * This method evaluates the messages in the message list for the automatic
 	 * evaluation. For each message, reads it's rules and calculates the weight
 	 * of the message, if the message is from the SPAM file and the weight is
-	 * less than five it adds one to the false positives, if the message is from
+	 * less than five it adds one to the false negatives, if the message is from
 	 * the HAM file and the weight is more than five it adds one to the false
-	 * negatives.
+	 * positives.
 	 * 
 	 * @param A double vector that set's all the weights of the rules in the
 	 *        automatic evaluation.
 	 * @return The results of the false positives an false negatives in in a
 	 *         vector with both results.
 	 */
-	public int[] evaluateAutomatic(double[] x) {
-		FP = 0; 
-		FN = 0; 
-		System.out.println(rules.size());
-=======
-	 * This method evaluates the messages in the message list for 
-	 * the automatic evaluation.
-	 * For each message, reads it's rules and calculates the weight 
-	 * of the message, if the message is from the SPAM file and the 
-	 * weight is less than five it adds one to the false positives,
-	 * if the message is from the HAM file and the weight is more 
-	 * than five it adds one to the false negatives. 
-	 * @param A double vector that set's all the weights of the rules
-	 * in the automatic evaluation. 
-	 * @return The results of the false positives and false negatives in
-	 * in a vector with both results.
-	 */
-	public int[] evaluateAutomatic(double[] x) {
+	
+	int[] evaluateAutomatic(double[] x) {
 		FP = 0; 
 		FN = 0;
->>>>>>> 94ee13a5161892ff56aa2aac0d27850ceb4e3581
 		for (int i = 0; i < rules.size(); i++)
 			rules.get(i).setWeight(x[i]);
 		evaluate();

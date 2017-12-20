@@ -148,17 +148,18 @@ public class Anti_Spam_Filter {
 	 * 
 	 */
 	public void automaticEvaluation() {
-		try {
+		try { 
 			new AntiSpamFilterAutomaticConfiguration(this);
 			Scanner scann = new Scanner(
 					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs"));
 			String[] result = scann.nextLine().split(" ");
-			for (int i = 0; i < result.length; i++)
+			for (int i = 0; i < result.length; i++) 
 				rules.get(i).setWeight(Double.parseDouble(result[i]));
 			for (Rules ru : rules)
 				System.out.println(ru.getWeight());
 			window.setAutomaticResults(Integer.parseInt(result[result.length - 2].split(": ")[1]),
 					Integer.parseInt(result[result.length - 1].split(": ")[1]));
+			scann.close();
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}
@@ -215,7 +216,7 @@ public class Anti_Spam_Filter {
 	public int[] evaluateAutomatic(double[] x) {
 		FP = 0;
 		FN = 0;
-		for (int i = 0; i < x.length; i++)
+		for (int i = 0; i < rules.size(); i++)
 			rules.get(i).setWeight(x[i]); 
 		double weight = 0.0;
 		for (Message message : messages) {

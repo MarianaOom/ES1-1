@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.sql.rowset.serial.SerialArray;
+
 import gui.Window;
 
 /**
@@ -20,7 +22,7 @@ public class Anti_Spam_Filter {
 	private Window window;
 	private ArrayList<Rules> rules = new ArrayList<Rules>();
 	private int FP = 0;
-	private int FN = 0;
+	private int FN = 0; 
 	private ArrayList<Message> messages = new ArrayList<Message>();
 
 	public static void main(String[] args) {
@@ -48,19 +50,24 @@ public class Anti_Spam_Filter {
 	 *            the path for the rules file.
 	 */
 	public void prepareRules(String path) {
+		rules = new ArrayList<Rules>();
 		File fileRules = new File(path);
 		try {
 			Scanner scannerRules = new Scanner(fileRules);
 			System.out.println(" Rules - " + scannerRules.hasNextLine());
 			while (scannerRules.hasNextLine()) {
 				String temp = scannerRules.nextLine();
-				if (temp.contains("\t")) {
-					Rules rule = new Rules(temp.split("\t")[0]);
-					rule.setWeight(Integer.parseInt(temp.split("\t")[0]));
+				// System.out.println(temp);
+				if (temp.contains(" ")) {
+					Rules rule = new Rules(temp.split(" ")[0]);
+					System.out.println("vou sair - " + temp.contains(" "));
+					rule.setWeight(Double.parseDouble(temp.split(" ")[1]));
 					rules.add(rule);
+					System.out.println("Rule added - " + rules.size());
 				} else
-					rules.add(new Rules(scannerRules.nextLine()));
+					rules.add(new Rules(temp));
 			}
+			scannerRules.close();
 		} catch (Exception e) {
 			System.out.println("Failed to locate file rules!");
 		}
@@ -140,7 +147,7 @@ public class Anti_Spam_Filter {
 	 * 
 	 * @param i
 	 */
-	public void evaluate(int i) {
+	public void evaluate() {
 		FN = 0;
 		FP = 0;
 		double weight = 0.0;
@@ -153,12 +160,10 @@ public class Anti_Spam_Filter {
 				FP++;
 			weight = 0.0;
 		}
-		System.out.println("Falsos Positiovos - " + FP);
-		System.out.println("Falsos Negativos  - " + FN);
-		if (i == 0)
-			window.setManualResults(FP, FN);
-		else
-			window.setAutomaticResults(FP, FN);
+		// if (i == 0)
+		window.setManualResults(FP, FN);
+		// else
+		// window.setAutomaticResults(FP, FN);
 	}
 
 	/**
@@ -170,20 +175,47 @@ public class Anti_Spam_Filter {
 	 */
 	public void automaticEvaluation() {
 		try {
-
+			 new AntiSpamFilterAutomaticConfiguration(this);
 			Scanner scann = new Scanner(
-					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs"));
-			String[] result = scann.nextLine().split(" ");
-			System.out.println("Tamanho do result - " + rules.size());
-			for (int i = 0; i < result.length; i++)
-				rules.get(i).setWeight(Double.parseDouble(result[i]));
-			for (Rules ru : rules)
-				System.out.println(ru.getWeight());
-			evaluate(1);
+					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf"));
+			ArrayList<String> result = new ArrayList<String>();
+			// System.out.println("Tamanho do result - " + rules.size());
+			// for (int i = 0; i < result.length; i++)
+			// rules.get(i).setWeight(Double.parseDouble(result[i]));
+			// for (Rules ru : rules)
+			// System.out.println(ru.getWeight());
+			// evaluate(1);
+			int best = 0;
+
+			while (scann.hasNextLine()) {
+				String temp = scann.nextLine();
+
+				result.add(temp);
+			}
+			double min = (Double.parseDouble(result.get(0).split(" ")[1]));
+			for (int i = 0; i < result.size(); i++) {
+				if (min > Double.parseDouble(result.get(i).split(" ")[1])) {
+					best = i;
+					min = Double.parseDouble(result.get(i).split(" ")[1]);
+				} else if (Double.parseDouble(result.get(i).split(" ")[1]) == min) {
+					if (Double.parseDouble(result.get(best).split(" ")[0]) > Double
+							.parseDouble(result.get(i).split(" ")[0])) {
+						best = i;
+						min = Double.parseDouble(result.get(i).split(" ")[0]);
+					}
+				}
+			}
+
 			// window.setAutomaticResults(Integer.parseInt(result[result.length
 			// - 2].split(": ")[1]),
 			// Integer.parseInt(result[result.length - 1].split(": ")[1]));
+			window.setAutomaticResults((int) Double.parseDouble(result.get(best).split(" ")[0]), (int) min);
 			scann.close();
+			Process process = new ProcessBuilder("D:\\Programas\\R-3.4.3\\bin\\RScript.exe", "HV.Boxplot.R")
+					.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\R")).start();
+			Process process2 = new ProcessBuilder(
+					"D:\\Programas\\Nova pasta (2)\\miktex\\bin\\x64\\miktex-pdflatex.exe", "AntiSpamStudy.tex")
+							.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\latex")).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -209,13 +241,12 @@ public class Anti_Spam_Filter {
 			// else
 			// f = new File("Rules/Automatic_rules" + number + ".cf");
 			// f = new File("rules.cf");
-			FileWriter fi = new FileWriter("rules.cf");
+			FileWriter fi = new FileWriter("rules.cf", false);
 			BufferedWriter printer = new BufferedWriter(fi);
 			for (Rules rule : rules) {
-				String line = rule.getName() + "\t" + rule.getWeight();
+				String line = rule.getName() + " " + rule.getWeight();
 				printer.write(line);
 				printer.newLine();
-				System.out.println("Printed - " + rule.getName());
 			}
 			// printer.write("FP:\t" + FP);
 			// printer.newLine();
@@ -225,9 +256,8 @@ public class Anti_Spam_Filter {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 	}
-
 	/**
 	 * This method evaluates the messages in the message list for the automatic
 	 * evaluation. For each message, reads it's rules and calculates the weight
@@ -243,20 +273,12 @@ public class Anti_Spam_Filter {
 	 *         vector with both results.
 	 */
 	public int[] evaluateAutomatic(double[] x) {
+		System.out.println("VOU AVALIAR O AUTOMATIO");
 		FP = 0;
 		FN = 0;
 		for (int i = 0; i < rules.size(); i++)
 			rules.get(i).setWeight(x[i]);
-		double weight = 0.0;
-		for (Message message : messages) {
-			for (Rules rule : message.getRules())
-				weight += rule.getWeight();
-			if (weight > 5 && message instanceof Ham)
-				FN++;
-			if (weight < 5 && message instanceof Spam)
-				FP++;
-			weight = 0.0;
-		}
+		evaluate();
 		int[] result = new int[2];
 		result[0] = FP;
 		result[1] = FN;

@@ -79,8 +79,7 @@ public class Anti_Spam_FilterTest {
  
 	@Test
 	public void testEvaluate() {
-		filter.evaluate(0);
-		filter.evaluate(1);
+		filter.evaluate();
 	}
 
 
@@ -91,6 +90,9 @@ public class Anti_Spam_FilterTest {
  
 	@Test
 	public void testPrintResults() {
+		filter.prepareRules("rules.cf");
+		filter.readHam("ham.log");
+		filter.readSpam("spam.log");
 		filter.printResults(0);
 		filter.printResults(1); 
 	}

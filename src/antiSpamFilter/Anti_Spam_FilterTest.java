@@ -29,7 +29,7 @@ public class Anti_Spam_FilterTest {
 	
 	@Test
 	public void testGetRulesMessage(){
-		message.getRules(); 
+		message.getRules();
 	}
 	
 	@Test 
@@ -97,9 +97,6 @@ public class Anti_Spam_FilterTest {
    
 	@Test
 	public void testPrintResults() {
-		filter.prepareRules("rules.cf");
-		filter.readHam("ham.log");
-		filter.readSpam("spam.log");
 		filter.printResults(0);
 		filter.printResults(1); 
 	}

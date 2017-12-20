@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import antiSpamFilter.AntiSpamFilterAutomaticConfiguration;
 import antiSpamFilter.Anti_Spam_Filter;
 import antiSpamFilter.Rules;
 
@@ -54,7 +52,6 @@ public class Window extends JFrame {
 	private Anti_Spam_Filter filter;
 	private int FN;
 	private int FP;
-	AntiSpamFilterAutomaticConfiguration anti;
 
 	/**
 	 * Launch the application.
@@ -96,7 +93,7 @@ public class Window extends JFrame {
 		gbc_lblRulesPath.gridx = 1;
 		gbc_lblRulesPath.gridy = 1;
 		contentPane.add(lblRulesPath, gbc_lblRulesPath);
- 
+
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
@@ -114,7 +111,6 @@ public class Window extends JFrame {
 				fc.showOpenDialog(w);
 				textField.setText(fc.getSelectedFile().getName());
 				fc.setVisible(true);
-				System.out.println(fc.getSelectedFile().getAbsolutePath());
 				fil.prepareRules(fc.getSelectedFile().getAbsolutePath()); 
 				for (Rules rule : filter.getRules()) {
 					dropDown.addItem(rule.getName());
@@ -251,7 +247,7 @@ public class Window extends JFrame {
 		btnNewButton = new JButton("Evaluate");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
- 
+
 				filter.evaluate();
 				setManualResults(filter.getFP(), filter.getFN());
 			}
@@ -424,7 +420,7 @@ public class Window extends JFrame {
 		contentPane.add(manual_FP, gbc_textField_5);
 		manual_FP.setColumns(10);
 
-		lblGeradorAutomtico = new JLabel("Gerador Automático");
+		lblGeradorAutomtico = new JLabel("Gerador Autom\u00E1tico");
 		gbc_lblGeradorAutomtico = new GridBagConstraints();
 		gbc_lblGeradorAutomtico.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGeradorAutomtico.gridx = 1;
@@ -432,7 +428,7 @@ public class Window extends JFrame {
 		contentPane.add(lblGeradorAutomtico, gbc_lblGeradorAutomtico);
 
 		dropDown2 = new JComboBox();
-		for (Rules rule : filter.getRules()) 
+		for (Rules rule : filter.getRules())
 			dropDown2.addItem(rule.getName());
 		dropDown2.addActionListener(new ActionListener() {
 
@@ -454,7 +450,6 @@ public class Window extends JFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				fil.automaticEvaluation();
-				textField_3.setText("" + filter.getRules().get(dropDown2.getSelectedIndex()).getWeight());
 			}
 		});
 		gbc_btnNewButton_3 = new GridBagConstraints();
@@ -521,13 +516,13 @@ public class Window extends JFrame {
 				textField_3.setBackground(Color.RED);
 
 			try {
-				Thread.sleep(1); 
-		} catch (InterruptedException e1) {
+				Thread.sleep(1);
+			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			textField_3.setBackground(Color.WHITE);
-		} else { 
+		} else {
 			Double value = Double.parseDouble(textField_3.getText());
 			if (value < -5)
 				value = -5.0;

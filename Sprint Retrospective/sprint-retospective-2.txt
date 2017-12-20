@@ -1,0 +1,17 @@
+Sprint Retrospective #2
+
+-O que correu bem?
+
+Não ocorreram precalços
+Code Inspection(java_checklist) - tivemos o cuidado de, ao escrever código, ter em conta a maioria dos checks points.
+
+-O que correu mal?
+
+Demasiado tempo dispendido para perceber como se fazem os testes de cobertura 
+
+-Aspetos a manter:
+
+
+-Aspetos a melhorar:
+
+Melhor gestão de tempo.

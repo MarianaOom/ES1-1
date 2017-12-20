@@ -9,7 +9,6 @@ import org.uma.jmetal.solution.DoubleSolution;
 
 public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
-	int abc = 0;
 	private Anti_Spam_Filter filtro;
 
 	public AntiSpamFilterProblem(Anti_Spam_Filter f) {

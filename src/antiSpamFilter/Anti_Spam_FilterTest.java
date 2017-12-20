@@ -17,7 +17,7 @@ public class Anti_Spam_FilterTest {
 	
 	@Test 
 	public void testGetName(){
-		rule.getName();
+		rule.getName(); 
 	}
 	
 	@Test
@@ -68,6 +68,7 @@ public class Anti_Spam_FilterTest {
 	public void testReadSpam() {
 		filter.readSpam("Rules/spam.log");
 		filter.readSpam("spam.log"); 
+		assertTrue(true);
 	}
 
 	@Test
@@ -75,7 +76,7 @@ public class Anti_Spam_FilterTest {
 		filter.createMessage("teste", 0);
 		filter.createMessage("teste", 1);
 	}
-
+ 
 	@Test
 	public void testEvaluate() {
 		filter.evaluate();
@@ -84,7 +85,7 @@ public class Anti_Spam_FilterTest {
 
 	@Test
 	public void testAutomaticEvaluation() {
-		filter.automaticEvaluation();
+		filter.automaticEvaluation(); 
 	}
  
 	@Test

@@ -13,7 +13,9 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
 	public AntiSpamFilterProblem(Anti_Spam_Filter f) {
 		this(335);
-		filtro = f; 
+		filtro = f;
+		// 10 variables (anti-spam filter rules) by default
+
 	}
 
 	/**
@@ -35,10 +37,10 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		}
 		System.out.println(lowerLimit);
 		System.out.println(upperLimit);
-		setLowerLimit(lowerLimit); 
+		setLowerLimit(lowerLimit);
 		setUpperLimit(upperLimit);
 	}
- 
+
 	/* (non-Javadoc)
 	 * @see org.uma.jmetal.problem.Problem#evaluate(java.lang.Object)
 	 * This method runs the evaluateAutomatic function.
@@ -49,7 +51,7 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 			x[i] = solution.getVariableValue(i);
 		int[] fx = filtro.evaluateAutomatic(x);
 		solution.setObjective(0, fx[0]);
-		solution.setObjective(1, fx[1]); 
+		solution.setObjective(1, fx[1]);
 
 	}
 }

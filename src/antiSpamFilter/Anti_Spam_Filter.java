@@ -213,7 +213,7 @@ public class Anti_Spam_Filter {
 	 * in a vector with both results.
 	 */
 	public int[] evaluateAutomatic(double[] x) {
-		FP = 0;
+		FP = 0; 
 		FN = 0;
 		for (int i = 0; i < x.length; i++)
 			rules.get(i).setWeight(x[i]); 

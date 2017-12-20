@@ -1,0 +1,60 @@
+Sprint Retrospective #1
+
+-O que correu bem?
+
+conseguimos completar o código
+boa distribuição de trabalho pelos elementos do grupo
+
+
+-O que correu mal?
+
+dificuldade em perceber o funcionamneto do git
+dificuldade em prever duração de cada sprint
+
+
+-Aspetos a manter:
+
+distribuição de trabalho
+
+-Aspetos a melhorar:
+gestão de tempo dispendido em cada sprint de forma a ir ao encontro do nosso planeamento.
+
+----------------------------------------
+Sprint Retrospective #2
+
+-O que correu bem?
+
+Não ocorreram precalços
+Code Inspection(java_checklist) - tivemos o cuidado de, ao escrever código, ter em conta a maioria dos checks points.
+
+-O que correu mal?
+
+Demasiado tempo dispendido para perceber como se fazem os testes de cobertura 
+
+-Aspetos a manter:
+
+
+-Aspetos a melhorar:
+
+Melhor gestão de tempo.
+
+----------------------------------------
+Sprint Retrospective #3
+
+-O que correu bem?
+
+boa distribuição de trabalho pelos elementos do grupo
+saber à partida qual o melhor método para fazer o video de demonstração.
+
+-O que correu mal?
+
+
+
+-Aspetos a manter:
+
+distribuição de trabalho
+
+-Aspetos a melhorar:
+
+
+

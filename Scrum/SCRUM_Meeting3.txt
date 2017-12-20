@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 SCRUM meeting (3)
 
 -Planeamento do desenvolvimento de ficheiros para entrega final.
 -Delegação de trabalho para terceiro sprint.
+=======
+SCRUM meeting (3)
+
+-Planeamento do desenvolvimento de ficheiros para entrega final.
+-Delegação de trabalho para terceiro sprint.
+>>>>>>> b04803188af29f2b7a7c702f1c3eb49f3267a1f8
 -Definição de datas.

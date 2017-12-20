@@ -27,7 +27,7 @@ public class Anti_Spam_FilterTest {
 	
 	@Test
 	public void testGetRulesMessage(){
-		message.getRules();
+		message.getRules(); 
 	}
 	
 	@Test 
@@ -79,7 +79,8 @@ public class Anti_Spam_FilterTest {
  
 	@Test
 	public void testEvaluate() {
-		filter.evaluate();
+		filter.evaluate(0);
+		filter.evaluate(1);
 	}
 
 

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import antiSpamFilter.AntiSpamFilterAutomaticConfiguration;
 import antiSpamFilter.Anti_Spam_Filter;
 import antiSpamFilter.Rules;
 
@@ -93,7 +95,7 @@ public class Window extends JFrame {
 		gbc_lblRulesPath.gridx = 1;
 		gbc_lblRulesPath.gridy = 1;
 		contentPane.add(lblRulesPath, gbc_lblRulesPath);
-
+ 
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
@@ -247,8 +249,8 @@ public class Window extends JFrame {
 		btnNewButton = new JButton("Evaluate");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				filter.evaluate();
+ 
+				filter.evaluate(0);
 			}
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -449,6 +451,12 @@ public class Window extends JFrame {
 		btnNewButton_3 = new JButton("Genarate");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					new AntiSpamFilterAutomaticConfiguration(fil);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				fil.automaticEvaluation();
 			}
 		});

@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 import javax.sql.rowset.serial.SerialArray;
 
+import org.junit.Ignore;
+
 import gui.Window;
 
 /**
@@ -60,13 +62,11 @@ public class Anti_Spam_Filter {
 				// System.out.println(temp);
 				if (temp.contains(" ")) {
 					Rules rule = new Rules(temp.split(" ")[0]);
-					System.out.println("vou sair - " + temp.contains(" "));
 					rule.setWeight(Double.parseDouble(temp.split(" ")[1]));
 					rules.add(rule);
-					System.out.println("Rule added - " + rules.size());
 				} else
 					rules.add(new Rules(temp));
-			}
+			} 
 			scannerRules.close();
 		} catch (Exception e) {
 			System.out.println("Failed to locate file rules!");
@@ -140,9 +140,9 @@ public class Anti_Spam_Filter {
 	 * This method evaluates the messages in the message list, for the manual
 	 * evaluation. For each message, reads it's rules and calculates the weight
 	 * of the message, if the message is from the SPAM file and the weight is
-	 * less than five it adds one to the false positives, if the message is from
+	 * less than five it adds one to the false negatives, if the message is from
 	 * the HAM file and the weight is more than five it adds one to the false
-	 * negatives. In the end prints the results of the false positives and false
+	 * positives. In the end prints the results of the false positives and false
 	 * negatives in the application window.
 	 * 
 	 * @param i
@@ -155,17 +155,28 @@ public class Anti_Spam_Filter {
 			for (Rules rule : message.getRules())
 				weight += rule.getWeight();
 			if (weight > 5 && message instanceof Ham)
-				FN++;
-			if (weight < 5 && message instanceof Spam)
 				FP++;
+			if (weight < 5 && message instanceof Spam)
+				FN++;
 			weight = 0.0;
 		}
 		// if (i == 0)
-		window.setManualResults(FP, FN);
+		//window.setManualResults(FP, FN);
 		// else
 		// window.setAutomaticResults(FP, FN);
 	}
 
+	
+
+	public void launcAuto(){
+		try {
+			AntiSpamFilterAutomaticConfiguration anti =new AntiSpamFilterAutomaticConfiguration(this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	} 
+	
 	/**
 	 * This method initiates the AntiSpamFilterAutomaticConfiguration which
 	 * set's the weights of the rules and saves them on the NSGAII file. In the
@@ -175,16 +186,17 @@ public class Anti_Spam_Filter {
 	 */
 	public void automaticEvaluation() {
 		try {
-			 new AntiSpamFilterAutomaticConfiguration(this);
+			//launcAuto();
+			
 			Scanner scann = new Scanner(
 					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf"));
 			ArrayList<String> result = new ArrayList<String>();
-			// System.out.println("Tamanho do result - " + rules.size());
+			// System.out.println("Tamanho do result - " + rules.size()); 
 			// for (int i = 0; i < result.length; i++)
 			// rules.get(i).setWeight(Double.parseDouble(result[i]));
 			// for (Rules ru : rules)
 			// System.out.println(ru.getWeight());
-			// evaluate(1);
+			// evaluate(1); 
 			int best = 0;
 
 			while (scann.hasNextLine()) {
@@ -243,6 +255,7 @@ public class Anti_Spam_Filter {
 			// f = new File("rules.cf");
 			FileWriter fi = new FileWriter("rules.cf", false);
 			BufferedWriter printer = new BufferedWriter(fi);
+			System.out.println("Vou printar");
 			for (Rules rule : rules) {
 				String line = rule.getName() + " " + rule.getWeight();
 				printer.write(line);
@@ -266,16 +279,15 @@ public class Anti_Spam_Filter {
 	 * the HAM file and the weight is more than five it adds one to the false
 	 * negatives.
 	 * 
-	 * @param A
-	 *            double vector that set's all the weights of the rules in the
-	 *            automatic evaluation.
+	 * @param A double vector that set's all the weights of the rules in the
+	 *        automatic evaluation.
 	 * @return The results of the false positives an false negatives in in a
 	 *         vector with both results.
 	 */
 	public int[] evaluateAutomatic(double[] x) {
-		System.out.println("VOU AVALIAR O AUTOMATIO");
-		FP = 0;
-		FN = 0;
+		FP = 0; 
+		FN = 0; 
+		System.out.println(rules.size());
 		for (int i = 0; i < rules.size(); i++)
 			rules.get(i).setWeight(x[i]);
 		evaluate();
@@ -283,6 +295,14 @@ public class Anti_Spam_Filter {
 		result[0] = FP;
 		result[1] = FN;
 		return result;
+	}
+	
+	public int getFP() {
+		return FP;
+	}
+
+	public int getFN() {
+		return FN;
 	}
 
 }

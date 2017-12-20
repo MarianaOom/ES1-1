@@ -44,16 +44,16 @@ public class AntiSpamFilterAutomaticConfiguration {
             .setIndicatorList(Arrays.asList(new PISAHypervolume<DoubleSolution>()))
             .setIndependentRuns(INDEPENDENT_RUNS)
             .setNumberOfCores(8)
-            .build();    
+            .build();     
 
     new ExecuteAlgorithms<>(experiment).run();
-    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
+    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run(); 
     new ComputeQualityIndicators<>(experiment).run() ;
     new GenerateLatexTablesWithStatistics(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
     
   } 
-
+ 
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();

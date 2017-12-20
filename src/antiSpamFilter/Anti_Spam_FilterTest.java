@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import junit.framework.Assert;
+
 public class Anti_Spam_FilterTest {
 	
 	Anti_Spam_Filter filter = new Anti_Spam_Filter();
@@ -82,12 +84,17 @@ public class Anti_Spam_FilterTest {
 		filter.evaluate();
 	}
 
+//	@Test
+//	public void testLaunchAuto() {
+//		filter.launcAuto();
+//	}
 
 	@Test
 	public void testAutomaticEvaluation() {
-		filter.automaticEvaluation(); 
+		//filter.launcAuto(); 
+		filter.automaticEvaluation();  
 	}
- 
+   
 	@Test
 	public void testPrintResults() {
 		filter.prepareRules("rules.cf");
@@ -99,11 +106,11 @@ public class Anti_Spam_FilterTest {
 
 	@Test
 	public void testEvaluateAutomatic() {
-		double[] x = new double[365];
+		double[] x = new double[335];
 		for (int i = 0; i < x.length; i++) {
 			x[i]=Math.random();
 		}
-		filter.evaluateAutomatic(x);
+		filter.evaluateAutomatic(x); 
 	}
 
 	@Test

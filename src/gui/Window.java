@@ -127,7 +127,7 @@ public class Window extends JFrame {
 		gbc_btnHam.gridx = 3;
 		gbc_btnHam.gridy = 1;
 		contentPane.add(btnHam, gbc_btnHam);
-
+ 
 		lblHamPath = new JLabel("Ham Path");
 		GridBagConstraints gbc_lblHamPath = new GridBagConstraints();
 		gbc_lblHamPath.insets = new Insets(0, 0, 5, 5);
@@ -253,6 +253,7 @@ public class Window extends JFrame {
 			public void actionPerformed(ActionEvent e) {
  
 				filter.evaluate();
+				setManualResults(filter.getFP(), filter.getFN());
 			}
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -276,21 +277,19 @@ public class Window extends JFrame {
 		gbc_textField_4.gridx = 2;
 		gbc_textField_4.gridy = 7;
 		contentPane.add(manual_FN, gbc_textField_4);
-		manual_FN.setColumns(10);
+		manual_FN.setColumns(10); 
 
-		btnNewButton_1 = new JButton("Save");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (Rules r : filter.getRules())
-					if (r.getWeight() != 0.0)
-						System.out.println(r.getWeight());
-			}
-		});
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_1.gridx = 3;
-		gbc_btnNewButton_1.gridy = 7;
-		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+//		btnNewButton_1 = new JButton("Save");
+//		btnNewButton_1.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				fil.printResults(0);
+//			}
+//		});
+//		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+//		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
+//		gbc_btnNewButton_1.gridx = 3;
+//		gbc_btnNewButton_1.gridy = 7;
+//		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
 
 		lblFp = new JLabel("FP:");
 		GridBagConstraints gbc_lblFp = new GridBagConstraints();
@@ -324,7 +323,7 @@ public class Window extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int index = dropDown2.getSelectedIndex();
-				textField_3.setText("" + filter.getRules().get(dropDown2.getSelectedIndex()).getWeight());
+				textField_3.setText("" + filter.getRules().get(dropDown2.getSelectedIndex()).getWeight()); 
 
 			}
 		});
@@ -338,6 +337,7 @@ public class Window extends JFrame {
 		btnNewButton_3 = new JButton("Genarate");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				fil.launcAuto(); 
 				fil.automaticEvaluation();
 			}
 		});
@@ -349,7 +349,7 @@ public class Window extends JFrame {
 
 		label = new JLabel("FN:");
 		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.anchor = GridBagConstraints.EAST;
+		gbc_label.anchor = GridBagConstraints.EAST; 
 		gbc_label.insets = new Insets(0, 0, 5, 5);
 		gbc_label.gridx = 1;
 		gbc_label.gridy = 12;
@@ -393,19 +393,19 @@ public class Window extends JFrame {
 		contentPane.add(manual_FN, gbc_textField_4);
 		manual_FN.setColumns(10);
 
-		btnNewButton_1 = new JButton("Save");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (Rules r : filter.getRules())
-					if (r.getWeight() != 0.0)
-						System.out.println(r.getWeight());
-			}
-		});
-		gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_1.gridx = 3;
-		gbc_btnNewButton_1.gridy = 7;
-		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+//		btnNewButton_1 = new JButton("Save");
+//		btnNewButton_1.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				for (Rules r : filter.getRules())
+//					if (r.getWeight() != 0.0)
+//						System.out.println(r.getWeight());
+//			}
+//		});
+//		gbc_btnNewButton_1 = new GridBagConstraints();
+//		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
+//		gbc_btnNewButton_1.gridx = 3;
+//		gbc_btnNewButton_1.gridy = 7;
+//		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
 
 		lblFp = new JLabel("FP:");
 		gbc_lblFp = new GridBagConstraints();

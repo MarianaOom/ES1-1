@@ -27,7 +27,6 @@ public class Anti_Spam_FilterTest {
 	@Test
 	public void testSetweight() {
 		rule.setWeight(5.0);
-		System.out.println(rule.getWeight());
 		assertTrue(rule.getWeight()==5.0);
 	}
 
@@ -148,7 +147,6 @@ public class Anti_Spam_FilterTest {
 		filter.readHam("ham.log");
 		filter.evaluateAutomatic(zero);
 		filter.evaluate();
-		System.out.println(filter.getFN() + " -1 " + filter.getFP());
 		assertEquals(filter.getFN(), 239);
 		assertEquals(filter.getFP(), 0);
 		for (int i = 0; i < zero.length; i++) {
@@ -159,7 +157,6 @@ public class Anti_Spam_FilterTest {
 		filter.readHam("ham.log");
 		filter.evaluateAutomatic(zero);
 		filter.evaluate();
-		System.out.println(filter.getFN() + " -2 " + filter.getFP());
 		assertEquals(filter.getFN(), 239);
 		assertEquals(filter.getFP(), 694);
 	}
@@ -177,9 +174,9 @@ public class Anti_Spam_FilterTest {
 		filter.evaluateAutomatic(zero);
 		filter.printResults();
 		filter.automaticEvaluation();
-		System.out.println(filter.getFN() + " - " + filter.getFP());
-		assertEquals(filter.getFN(), 1);
-		assertEquals(filter.getFP(), 3);
+		System.out.println(filter.getFN() +" - " +filter.getFP());
+		assertEquals(filter.getFN(), 0);
+		assertEquals(filter.getFP(), 0);
 	}
 
 	/** Tests whether Anti_Spam_Filter's printResults() function correctly prints the results;
@@ -194,8 +191,6 @@ public class Anti_Spam_FilterTest {
 		filter.prepareRules("rulesTeste.cf");
 		filter.evaluateAutomatic(zero);
 		filter.printResults();
-		System.out.println(filter.getFN() + " --- " + filter.getFP());
-
 		assertEquals(filter.getFN(), 0);
 		assertEquals(filter.getFP(), 0);
 	}
@@ -211,10 +206,10 @@ public class Anti_Spam_FilterTest {
 			zero[i] = 5;
 		}
 		filter.prepareRules("rulesTeste.cf");
-
 		filter.evaluateAutomatic(zero);
 		assertEquals(filter.getFN(), 0);
 		assertEquals(filter.getFP(), 0);
+		//filter.launcAuto();
 
 	}
 

@@ -42,8 +42,8 @@ public class Anti_Spam_Filter {
 	 * This method locates the rules file and reads it. warns user if it can't
 	 * find the file.
 	 * 
-	 * @param path name
-	 *            the path for the rules file.
+	 * @param path
+	 *            name the path for the rules file.
 	 */
 	public void prepareRules(String path) {
 		rules = new ArrayList<Rules>();
@@ -69,8 +69,8 @@ public class Anti_Spam_Filter {
 	 * This method locates the HAM file and reads it. warns user if it can't
 	 * find the file.
 	 * 
-	 * @param path name
-	 *            the path for the HAM file.
+	 * @param path
+	 *            name the path for the HAM file.
 	 */
 	public void readHam(String path) {
 		File fileHam = new File(path);
@@ -87,7 +87,8 @@ public class Anti_Spam_Filter {
 	 * This method locates the SPAM file and reads it. warns user if it can't
 	 * find the file.
 	 * 
-	 * @param path path for the SPAM file.
+	 * @param path
+	 *            path for the SPAM file.
 	 */
 	public void readSpam(String path) {
 		File fileSpam = new File(path);
@@ -107,8 +108,10 @@ public class Anti_Spam_Filter {
 	 * object, be it Ham or Spam. Gets the rules that evaluate the given message
 	 * and copies them into the Rules array field.
 	 * 
-	 * @param s String type that splits the line in the file.
-	 * @param i Integer that defines if we are reading the HAM or SPAM file.
+	 * @param s
+	 *            String type that splits the line in the file.
+	 * @param i
+	 *            Integer that defines if we are reading the HAM or SPAM file.
 	 */
 	public void createMessage(String s, int i) {
 		String[] line = s.split("\\t");
@@ -167,37 +170,48 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
-	 * This method reads referenceFronts's AntiSpamFilterProblem.NSGAII.rf file
+	 * This method reads referenceFronts's AntiSpamFilterProblem.NSGAII.rs file
 	 * which contains the results previously calculated with the automatically
-	 * generated weight array. It sends the result to the gui so it may be
+	 * generated weight array. 
+	 * It calculates the false negatives and false positives relative to each of the results of the automatic generation
+	 * It sends the result to the gui so it may be
 	 * displayed to the user and generates latex's pdf and R' Boxplot.
 	 * 
 	 */
 	public void automaticEvaluation() {
 		try {
-			Scanner scann = new Scanner(
-					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf"));
-			ArrayList<String> result = new ArrayList<String>();
-			int best = 0;
-			while (scann.hasNextLine())
-				result.add(scann.nextLine());
-			double min = (Double.parseDouble(result.get(0).split(" ")[1]));
-			for (int i = 0; i < result.size(); i++) {
-				if (min > Double.parseDouble(result.get(i).split(" ")[1])) {
-					best = i;
-					min = Double.parseDouble(result.get(i).split(" ")[1]);
-				} else if (Double.parseDouble(result.get(i).split(" ")[1]) == min) {
-					if (Double.parseDouble(result.get(best).split(" ")[0]) > Double
-							.parseDouble(result.get(i).split(" ")[0])) {
-						best = i;
-						min = Double.parseDouble(result.get(i).split(" ")[0]);
-					}
+			String[] rar = new String[635];
+			ArrayList<Integer> result = new ArrayList<Integer>();
+
+			Scanner scanne = new Scanner(
+					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs"));
+
+			int j = 0;
+			while (scanne.hasNextLine()) {
+				rar[j] = scanne.nextLine();
+				for (int i = 0; i < rules.size(); i++) {
+					String[] temp = rar[j].split(" ");
+					rules.get(i).setWeight(Double.parseDouble(temp[i]));
 				}
+				evaluate();
+				result.add(FN);
+				j++;
 			}
-			FP = (int) Double.parseDouble(result.get(best).split(" ")[0]);
-			FN = (int) min;
+			scanne.close();
+			int min = result.get(0);
+			int best = 0;
+			for (int i = 0; i < result.size(); i++)
+				if (result.get(i) < min) {
+					min = result.get(i);
+					best = i;
+				}
+			for (int i = 0; i < rules.size(); i++) {
+				String[] temp = rar[best].split(" ");
+				rules.get(i).setWeight(Double.parseDouble(temp[i]));
+			}
+			evaluate();
 			window.setAutomaticResults(FP, FN);
-			scann.close();
+
 			Process process = new ProcessBuilder("D:\\Programas\\R-3.4.3\\bin\\RScript.exe", "HV.Boxplot.R")
 					.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\R")).start();
 			Process process2 = new ProcessBuilder(
@@ -231,11 +245,13 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
-	 * This method sets the rules weight with the values given in the double array passed as an attribute.
-	 * Then the method evaluate is called for the message to be evaluated.
-	 *  
-	 * @param x A double vector that set's all the weights of the rules in the
-	 *        	automatic evaluation.
+	 * This method sets the rules weight with the values given in the double
+	 * array passed as an attribute. Then the method evaluate is called for the
+	 * message to be evaluated.
+	 * 
+	 * @param x
+	 *            A double vector that set's all the weights of the rules in the
+	 *            automatic evaluation.
 	 * @return The results of the false positives an false negatives in in a
 	 *         vector with both results.
 	 */
@@ -252,18 +268,21 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
-	 * @return Returns the value of the FP variable which contains the amount of false positives
+	 * @return Returns the value of the FP variable which contains the amount of
+	 *         false positives
 	 */
 	public int getFP() {
 		return FP;
 	}
+
 	/**
-	 * @return Returns the value of the FN variable which contains the amount of false negaatives
+	 * @return Returns the value of the FN variable which contains the amount of
+	 *         false negaatives
 	 */
 	public int getFN() {
 		return FN;
 	}
-	
+
 	/**
 	 * @return Returns the array list of messages
 	 */

@@ -174,7 +174,6 @@ public class Anti_Spam_FilterTest {
 		filter.evaluateAutomatic(zero);
 		filter.printResults();
 		filter.automaticEvaluation();
-		System.out.println(filter.getFN() +" - " +filter.getFP());
 		assertEquals(filter.getFN(), 0);
 		assertEquals(filter.getFP(), 0);
 	}

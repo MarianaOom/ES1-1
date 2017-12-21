@@ -1,0 +1,14 @@
+<<<<<<< HEAD
+SCRUM Meeting
+
+-Ver objetivos de projeto 
+-Criar primeiro Sprint
+-Definir datas
+=======
+SCRUM Meeting
+
+-Ver objetivos de projeto 
+-Criar primeiro Sprint
+-Definir datas
+>>>>>>> b04803188af29f2b7a7c702f1c3eb49f3267a1f8
+-Delegação de trabalho para o primeiro Sprint

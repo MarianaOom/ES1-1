@@ -20,6 +20,7 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
 	/**
 	 * @param numberOfVariables The number of variables in study
+	 * 
 	 */
 	public AntiSpamFilterProblem(Integer numberOfVariables) {
 		setNumberOfVariables(numberOfVariables);
@@ -37,7 +38,7 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		setUpperLimit(upperLimit);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.uma.jmetal.problem.Problem#evaluate(java.lang.Object)
 	 * This method runs the evaluateAutomatic function.
 	 */

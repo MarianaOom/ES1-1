@@ -22,7 +22,7 @@ public class Rules {
 	
 	/**
 	 * This method sets the rules weight.
-	 * @param The weight given to the rule.
+	 * @param d The weight given to the rule.
 	 */
 	public void setWeight(double d){
 		this.weight=d;

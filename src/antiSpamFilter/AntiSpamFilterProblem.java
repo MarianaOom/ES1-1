@@ -12,15 +12,14 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 	private Anti_Spam_Filter filtro;
 
 	public AntiSpamFilterProblem(Anti_Spam_Filter f) {
-		this(335);
+		this(f.getRules().size());
 		filtro = f;
 		// 10 variables (anti-spam filter rules) by default
 
 	}
 
 	/**
-	 * This method was written by the professor.
-	 * @param numberOfVariables
+	 * @param numberOfVariables The number of variables in study
 	 */
 	public AntiSpamFilterProblem(Integer numberOfVariables) {
 		setNumberOfVariables(numberOfVariables);
@@ -31,12 +30,9 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
 
 		for (int i = 0; i < getNumberOfVariables(); i++) {
-			System.out.println(i);
 			lowerLimit.add(-5.0);
 			upperLimit.add(5.0);
 		}
-		System.out.println(lowerLimit);
-		System.out.println(upperLimit);
 		setLowerLimit(lowerLimit);
 		setUpperLimit(upperLimit);
 	}

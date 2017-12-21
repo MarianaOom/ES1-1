@@ -7,7 +7,7 @@ Code Inspection(java_checklist) - tivemos o cuidado de, ao escrever código, ter 
 
 -O que correu mal?
 
-Demasiado tempo dispendido para perceber como se fazem os testes de cobertura 
+Demasiado tempo dispendido para perceber como se fazem os testes de junit 
 
 -Aspetos a manter:
 

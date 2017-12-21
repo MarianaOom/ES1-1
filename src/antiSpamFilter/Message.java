@@ -25,7 +25,7 @@ public class Message {
 	
 	/**
 	 * This method adds the rules to the list of rules in a message.
-	 * @param The rules to the message.
+	 * @param rules The rules to the message.
 	 */
 	public void addRules(Rules rules){
 		this.rules.add(rules);

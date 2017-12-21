@@ -2,16 +2,10 @@ package antiSpamFilter;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import javax.sql.rowset.serial.SerialArray;
-
-import org.junit.Ignore;
-
 import gui.Window;
 
 /**
@@ -24,7 +18,7 @@ public class Anti_Spam_Filter {
 	private Window window;
 	private ArrayList<Rules> rules = new ArrayList<Rules>();
 	private int FP = 0;
-	private int FN = 0; 
+	private int FN = 0;
 	private ArrayList<Message> messages = new ArrayList<Message>();
 
 	public static void main(String[] args) {
@@ -48,7 +42,7 @@ public class Anti_Spam_Filter {
 	 * This method locates the rules file and reads it. warns user if it can't
 	 * find the file.
 	 * 
-	 * @param name
+	 * @param path name
 	 *            the path for the rules file.
 	 */
 	public void prepareRules(String path) {
@@ -56,20 +50,18 @@ public class Anti_Spam_Filter {
 		File fileRules = new File(path);
 		try {
 			Scanner scannerRules = new Scanner(fileRules);
-			System.out.println(" Rules - " + scannerRules.hasNextLine());
 			while (scannerRules.hasNextLine()) {
 				String temp = scannerRules.nextLine();
-				// System.out.println(temp);
 				if (temp.contains(" ")) {
 					Rules rule = new Rules(temp.split(" ")[0]);
 					rule.setWeight(Double.parseDouble(temp.split(" ")[1]));
 					rules.add(rule);
 				} else
 					rules.add(new Rules(temp));
-			} 
+			}
 			scannerRules.close();
 		} catch (Exception e) {
-			System.out.println("Failed to locate file rules!");
+			System.out.println("Failed to locate RULES file!");
 		}
 	}
 
@@ -77,7 +69,7 @@ public class Anti_Spam_Filter {
 	 * This method locates the HAM file and reads it. warns user if it can't
 	 * find the file.
 	 * 
-	 * @param name
+	 * @param path name
 	 *            the path for the HAM file.
 	 */
 	public void readHam(String path) {
@@ -88,7 +80,6 @@ public class Anti_Spam_Filter {
 				createMessage(scannerHam.nextLine(), 1);
 		} catch (Exception e) {
 			System.out.println("Failed to locate HAM file!");
-
 		}
 	}
 
@@ -96,8 +87,7 @@ public class Anti_Spam_Filter {
 	 * This method locates the SPAM file and reads it. warns user if it can't
 	 * find the file.
 	 * 
-	 * @param name
-	 *            the path for the SPAM file.
+	 * @param path path for the SPAM file.
 	 */
 	public void readSpam(String path) {
 		File fileSpam = new File(path);
@@ -107,19 +97,18 @@ public class Anti_Spam_Filter {
 				createMessage(scannerSpam.nextLine(), 0);
 			}
 		} catch (Exception e) {
+			System.out.println("Failed to locate SPAM file!");
 		}
 
 	}
 
 	/**
-	 * This method reads one of the SPAM or HAM files. In every line associates
-	 * the message to it's set of rules and adds a message with it's set of
-	 * rules, to the message list.
+	 * This method turns each string read in the above functions into an Message
+	 * object, be it Ham or Spam. Gets the rules that evaluate the given message
+	 * and copies them into the Rules array field.
 	 * 
-	 * @param String
-	 *            type that splits the line in the file.
-	 * @param Integer
-	 *            that defines if we are reading the HAM or SPAM file.
+	 * @param s String type that splits the line in the file.
+	 * @param i Integer that defines if we are reading the HAM or SPAM file.
 	 */
 	public void createMessage(String s, int i) {
 		String[] line = s.split("\\t");
@@ -137,15 +126,12 @@ public class Anti_Spam_Filter {
 	}
 
 	/**
-	 * This method evaluates the messages in the message list, for the manual
-	 * evaluation. For each message, reads it's rules and calculates the weight
-	 * of the message, if the message is from the SPAM file and the weight is
-	 * less than five it adds one to the false negatives, if the message is from
-	 * the HAM file and the weight is more than five it adds one to the false
-	 * positives. In the end prints the results of the false positives and false
-	 * negatives in the application window.
-	 * 
-	 * @param i
+	 * This method evaluates the messages in the message list. For each message
+	 * reads it's rules and calculates the weight of the message, if the message
+	 * is from the SPAM file and the weight is less than five it adds one to the
+	 * false negatives, if the message is from the HAM file and the weight is
+	 * more than five it adds one to the false positives.
+	 *
 	 */
 	public void evaluate() {
 		FN = 0;
@@ -154,56 +140,47 @@ public class Anti_Spam_Filter {
 		for (Message message : messages) {
 			for (Rules rule : message.getRules())
 				weight += rule.getWeight();
-			if (weight > 5 && message instanceof Ham)
+			if (weight >= 5 && message instanceof Ham)
 				FP++;
 			if (weight < 5 && message instanceof Spam)
 				FN++;
 			weight = 0.0;
 		}
 		// if (i == 0)
-		//window.setManualResults(FP, FN);
+		// window.setManualResults(FP, FN);
 		// else
 		// window.setAutomaticResults(FP, FN);
 	}
 
-	
-
-	public void launcAuto(){
+	/**
+	 * This method launches the AntiSpamFilterAutomaticConfiguration object, so
+	 * it may be possible to calculate the weights automatically.
+	 * 
+	 */
+	public void launcAuto() {
 		try {
-			AntiSpamFilterAutomaticConfiguration anti =new AntiSpamFilterAutomaticConfiguration(this);
+			AntiSpamFilterAutomaticConfiguration anti = new AntiSpamFilterAutomaticConfiguration(this);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-	} 
-	
+		}
+	}
+
 	/**
-	 * This method initiates the AntiSpamFilterAutomaticConfiguration which
-	 * set's the weights of the rules and saves them on the NSGAII file. In the
-	 * end gives the results of the false positives and false negatives to the
-	 * application window.
+	 * This method reads referenceFronts's AntiSpamFilterProblem.NSGAII.rf file
+	 * which contains the results previously calculated with the automatically
+	 * generated weight array. It sends the result to the gui so it may be
+	 * displayed to the user and generates latex's pdf and R' Boxplot.
 	 * 
 	 */
 	public void automaticEvaluation() {
 		try {
-			//launcAuto();
-			
 			Scanner scann = new Scanner(
 					new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf"));
 			ArrayList<String> result = new ArrayList<String>();
-			// System.out.println("Tamanho do result - " + rules.size()); 
-			// for (int i = 0; i < result.length; i++)
-			// rules.get(i).setWeight(Double.parseDouble(result[i]));
-			// for (Rules ru : rules)
-			// System.out.println(ru.getWeight());
-			// evaluate(1); 
 			int best = 0;
-
-			while (scann.hasNextLine()) {
-				String temp = scann.nextLine();
-
-				result.add(temp);
-			}
+			while (scann.hasNextLine())
+				result.add(scann.nextLine());
 			double min = (Double.parseDouble(result.get(0).split(" ")[1]));
 			for (int i = 0; i < result.size(); i++) {
 				if (min > Double.parseDouble(result.get(i).split(" ")[1])) {
@@ -217,11 +194,9 @@ public class Anti_Spam_Filter {
 					}
 				}
 			}
-
-			// window.setAutomaticResults(Integer.parseInt(result[result.length
-			// - 2].split(": ")[1]),
-			// Integer.parseInt(result[result.length - 1].split(": ")[1]));
-			window.setAutomaticResults((int) Double.parseDouble(result.get(best).split(" ")[0]), (int) min);
+			FP = (int) Double.parseDouble(result.get(best).split(" ")[0]);
+			FN = (int) min;
+			window.setAutomaticResults(FP, FN);
 			scann.close();
 			Process process = new ProcessBuilder("D:\\Programas\\R-3.4.3\\bin\\RScript.exe", "HV.Boxplot.R")
 					.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\R")).start();
@@ -237,57 +212,36 @@ public class Anti_Spam_Filter {
 	 * This method saves the results of the evaluations. It is invoked in the
 	 * class window when the button "save" is pressed
 	 * 
-	 * @param Integer
-	 *            type that defines if the save was made in the automatic
-	 *            configuration or in the manual configuration.
 	 */
-	public void printResults(int type) {
-		// File[] r = (new File("Rules")).listFiles();
-		// String lastName = r[r.length - 1].getName();
-		// int number = Integer.parseInt(lastName.split("s")[1].split(".c")[0]);
-		// number++;
+	public void printResults() {
 		try {
-			// File f;
-			// if (type == 0)
-			// f = new File("Rules/rules" + number + ".cf");
-			// else
-			// f = new File("Rules/Automatic_rules" + number + ".cf");
-			// f = new File("rules.cf");
-			FileWriter fi = new FileWriter("rules.cf", false);
+			FileWriter fi = new FileWriter("AntiSpamConfigurationForLeisureMailbox/rules.cf", false);
 			BufferedWriter printer = new BufferedWriter(fi);
-			System.out.println("Vou printar");
 			for (Rules rule : rules) {
 				String line = rule.getName() + " " + rule.getWeight();
 				printer.write(line);
 				printer.newLine();
 			}
-			// printer.write("FP:\t" + FP);
-			// printer.newLine();
-			// printer.write("FN:\t" + FN);
 			printer.close();
 			fi.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
+
 	/**
-	 * This method evaluates the messages in the message list for the automatic
-	 * evaluation. For each message, reads it's rules and calculates the weight
-	 * of the message, if the message is from the SPAM file and the weight is
-	 * less than five it adds one to the false positives, if the message is from
-	 * the HAM file and the weight is more than five it adds one to the false
-	 * negatives.
-	 * 
-	 * @param A double vector that set's all the weights of the rules in the
-	 *        automatic evaluation.
+	 * This method sets the rules weight with the values given in the double array passed as an attribute.
+	 * Then the method evaluate is called for the message to be evaluated.
+	 *  
+	 * @param x A double vector that set's all the weights of the rules in the
+	 *        	automatic evaluation.
 	 * @return The results of the false positives an false negatives in in a
 	 *         vector with both results.
 	 */
 	public int[] evaluateAutomatic(double[] x) {
-		FP = 0; 
-		FN = 0; 
-		System.out.println(rules.size());
+		FP = 0;
+		FN = 0;
 		for (int i = 0; i < rules.size(); i++)
 			rules.get(i).setWeight(x[i]);
 		evaluate();
@@ -296,13 +250,25 @@ public class Anti_Spam_Filter {
 		result[1] = FN;
 		return result;
 	}
-	
+
+	/**
+	 * @return Returns the value of the FP variable which contains the amount of false positives
+	 */
 	public int getFP() {
 		return FP;
 	}
-
+	/**
+	 * @return Returns the value of the FN variable which contains the amount of false negaatives
+	 */
 	public int getFN() {
 		return FN;
+	}
+	
+	/**
+	 * @return Returns the array list of messages
+	 */
+	public ArrayList<Message> getMessages() {
+		return messages;
 	}
 
 }

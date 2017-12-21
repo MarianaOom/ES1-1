@@ -7,6 +7,6 @@ Grupo 26
 69784 Adr� Neiva, Developer, agpna@iscte-iul.pt
 70062, Mariana Melo, Quality manager, maamo@iscte-iul.pt 
 
-AntiSpamConfigurationForProfessionalAndLeisureMailbox
+AntiSpamConfigurationForLeisureMailbox
 
-TODO Link para um vídeo no youtube com a demonstração da aplicação final desenvolvida (ex: http://...)
+TODO https://www.youtube.com/watch?v=atKUpc2sWRA&feature=youtu.be
